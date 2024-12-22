@@ -10,6 +10,9 @@
   "block.substancecraft.oxidation_machine": "Oxidation Machine",
   "block.substancecraft.air_extractor": "Air Extractor",
   "block.substancecraft.salt_block": "Salt Block",
+  "block.substancecraft.mixer": "Mixer",
+  "block.substancecraft.heated_mixer": "Heated Mixer",
+  "block.substancecraft.fermentation_tank": "Fermentation Tank",
 
   "effect.minecraft.hunger": "Munchies",
 
@@ -44,6 +47,12 @@
   "item.substancecraft.methylamine": "Methylamine",
   "item.substancecraft.ethylene": "Ethylene",
   "item.substancecraft.propylene": "Propylene",
-  "item.substancecraft.diesel": "Diesel"
+  "item.substancecraft.diesel": "Diesel",
+  "item.substancecraft.ammonia": "Ammonia",
+  "item.substancecraft.ethanol": "Ethanol",
+  "item.substancecraft.yeast": "Yeast",
+  "item.substancecraft.corn": "Corn",
+  "item.substancecraft.hydrochloric_acid": "Hydrochloric Acid",
+  "item.substancecraft.ergot": "Ergot"
 
 }
