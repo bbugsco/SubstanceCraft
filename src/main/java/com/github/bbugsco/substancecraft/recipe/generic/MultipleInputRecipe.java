@@ -60,15 +60,17 @@ public class MultipleInputRecipe implements Recipe<MultipleItemInput> {
     public boolean matches(MultipleItemInput input, Level level) {
         if (level.isClientSide()) return false;
         if (input.size() != ingredients.size()) return false;
-        for (int i = 0; i < input.size(); i++) {
-            boolean inputInIngredients = false;
-            for (int j = i; j < input.size(); j++) {
-                if (ingredients.get(i).test(input.getItem(i))) {
-                    inputInIngredients = true;
+        for (Ingredient ingredient : ingredients) {
+            boolean ingredientInInput = false;
+            for (ItemStack inputItem : input.items()) {
+                if (ingredient.test(inputItem)) {
+                    ingredientInInput = true;
                     break;
                 }
             }
-            if (!inputInIngredients) return false;
+            if (!ingredientInInput) {
+                return false;
+            }
         }
         return true;
     }

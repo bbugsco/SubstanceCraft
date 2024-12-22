@@ -59,7 +59,14 @@ public class MultipleInputRecipeBuilder implements RecipeBuilder {
         Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(builder);
         this.criteria.forEach(builder::addCriterion);
-        MultipleInputRecipe recipeFactory = this.factory.create(this.ingredients, new ItemStack(this.result), this.byproducts, this.time);
+        int count = 1;
+        for (Ingredient ingredient : ingredients) {
+            if (ingredient != null && ingredient.test(new ItemStack(result))) {
+                count = 2;
+                break;
+            }
+        }
+        MultipleInputRecipe recipeFactory = this.factory.create(this.ingredients, new ItemStack(this.result, count), this.byproducts, this.time);
         exporter.accept(recipeId, recipeFactory, builder.build(recipeId.withPrefix("recipes/")));
     }
 

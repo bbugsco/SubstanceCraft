@@ -7,6 +7,7 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -14,10 +15,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> extends AbstractIoBlockEntity implements RecipeList<T> {
 
@@ -69,14 +70,6 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
         }
     }
 
-    public ItemStack getRenderStack() {
-        if (this.getItem(OUTPUT_SLOT).isEmpty()) {
-            return this.getItem(FIRST_INPUT_SLOT);
-        } else {
-            return this.getItem(OUTPUT_SLOT);
-        }
-    }
-
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
         return null;
@@ -87,7 +80,7 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
         ItemStack itemStack = this.inventory.get(slot);
         boolean itemsEqual = !stack.isEmpty() && ItemStack.isSameItem(itemStack, stack);
         this.inventory.set(slot, stack);
-        if (slot == FIRST_INPUT_SLOT && !itemsEqual) {
+        if (slot >= FIRST_INPUT_SLOT && slot < OUTPUT_SLOT && !itemsEqual) {
             this.maxProgress = getCookTime();
             this.progress = 0;
             this.setChanged();
@@ -106,13 +99,12 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
                 } else return Optional.empty();
             }
         } else {
-            MultipleItemInput input = new MultipleItemInput(inventory.subList(FIRST_INPUT_SLOT, OUTPUT_SLOT));
-            return matchGetter.getRecipeFor(input, level);
+            return matchGetter.getRecipeFor(new MultipleItemInput(noAirInputs()), level);
         }
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
-        if(level.isClientSide) return;
+        if (level.isClientSide) return;
         if (selectsRecipe) {
             selectedRecipeTick(level, pos, state);
         } else {
@@ -138,7 +130,7 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
         if (isSlotEmptyOrReceivable(OUTPUT_SLOT)) {
             if (hasRecipe()) {
                 T recipe = getRecipes().get(getSelectedRecipeIndex()).value();
-                if (recipe.matches(new MultipleItemInput(inventory.subList(FIRST_INPUT_SLOT, OUTPUT_SLOT)), level)) {
+                if (recipe.matches(new MultipleItemInput(noAirInputs()), level)) {
                     if ((inventory.get(OUTPUT_SLOT).getCount() == 0) || inventory.get(OUTPUT_SLOT).getItem() == recipe.getResult().getItem()) {
                         progress++;
                         setChanged(level, pos, state);
@@ -187,7 +179,9 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
 
     private void byproduct(MultipleInputRecipe recipe) {
         List<ItemStack> byproducts = recipe.getByproducts();
-        if (byproducts.isEmpty()) { return; }
+        if (byproducts.isEmpty()) {
+            return;
+        }
         int index = 0;
         for (ItemStack byproduct : byproducts) {
             if (getLevel() == null) return;
@@ -206,8 +200,12 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
     }
 
     private int getCookTime() {
-        MultipleItemInput input = new MultipleItemInput(inventory.subList(FIRST_INPUT_SLOT, OUTPUT_SLOT));
-        return matchGetter.getRecipeFor(input, level).map((recipe) -> recipe.value().getTime()).orElse(200);
+        Optional<RecipeHolder<T>> recipe = getCurrentRecipe();
+        return recipe.map(tRecipeHolder -> tRecipeHolder.value().time()).orElse(200);
+    }
+
+    private List<ItemStack> noAirInputs() {
+        return inventory.subList(FIRST_INPUT_SLOT, OUTPUT_SLOT).stream().filter(itemStack -> !itemStack.isEmpty() && !itemStack.getItem().equals(Items.AIR)).collect(Collectors.toList());
     }
 
 }

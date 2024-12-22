@@ -59,7 +59,8 @@ public class OneInputRecipeBuilder implements RecipeBuilder {
         Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(builder);
         this.criteria.forEach(builder::addCriterion);
-        OneInputRecipe recipeFactory = this.factory.create(this.ingredient, new ItemStack(this.result), this.byproducts, this.time);
+        int count = ingredient.test(new ItemStack(result)) ? 2 : 1;
+        OneInputRecipe recipeFactory = this.factory.create(this.ingredient, new ItemStack(this.result, count), this.byproducts, this.time);
         exporter.accept(recipeId, recipeFactory, builder.build(recipeId.withPrefix("recipes/")));
     }
 

@@ -86,7 +86,7 @@ public abstract class AbstractIoBlockEntity extends BlockEntity implements Exten
     }
 
     protected boolean canInsertAmountIntoSlot(ItemStack result, int slot) {
-        return this.getItem(slot).getCount() + result.getCount() <= getItem(slot).getMaxStackSize();
+        return this.getItem(slot).getCount() + result.getCount() <= result.getMaxStackSize();
     }
 
     protected boolean isSlotEmptyOrReceivable(int slot) {

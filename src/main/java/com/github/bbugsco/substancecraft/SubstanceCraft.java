@@ -27,7 +27,6 @@ public class SubstanceCraft implements ModInitializer, DataGeneratorEntrypoint {
     /*
      TODO:
      - barley, hops
-     - ergot?
      - fermentation tank (vinegar, alcohol)
      - dmt
      - bho/butane

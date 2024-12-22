@@ -23,7 +23,7 @@ public class MultipleInputMenu<R extends MultipleInputRecipe, T extends MultiInp
     public static final int INPUT_SLOT_X = 98;
     public static final int INPUT_SLOT_Y = 11;
 
-    public static final int OUTPUT_SLOT_INDEX = 1;
+    public static final int OUTPUT_SLOT_INDEX = 4;
     public static final int OUTPUT_SLOT_X = 98;
     public static final int OUTPUT_SLOT_Y = 59;
 
@@ -149,7 +149,7 @@ public class MultipleInputMenu<R extends MultipleInputRecipe, T extends MultiInp
     }
     
     public static Slot inputSlot(Container container, int index) {
-        return new Slot(container, INPUT_SLOT_INDEX + index, INPUT_SLOT_X, INPUT_SLOT_Y);
+        return new Slot(container, INPUT_SLOT_INDEX + index, INPUT_SLOT_X + (index * 18), INPUT_SLOT_Y);
     }
 
     public static Slot outputSlot(Container container) {
