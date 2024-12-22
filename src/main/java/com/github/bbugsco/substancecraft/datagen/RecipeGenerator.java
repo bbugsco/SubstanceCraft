@@ -56,7 +56,7 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .unlockedBy("has_item", has(Items.SMOOTH_STONE_SLAB))
                 .unlockedBy("has_item", has(Items.REDSTONE_BLOCK))
                 .unlockedBy("has_item", has(Items.PISTON))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "hash_press_craft"));
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "hash_press"));
 
         ShapedRecipeBuilder.shaped(
                         RecipeCategory.MISC,
@@ -73,14 +73,129 @@ public class RecipeGenerator extends FabricRecipeProvider {
         ShapedRecipeBuilder.shaped(
                         RecipeCategory.MISC,
                         SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.REFINERY))
-                .pattern("   ")
+                .pattern("333")
                 .pattern("212")
-                .pattern(" 2 ")
+                .pattern("323")
                 .define('1', Items.CAULDRON)
                 .define('2', Items.IRON_INGOT)
+                .define('3', Items.COPPER_BLOCK)
                 .unlockedBy("has_item", has(Items.CAULDRON))
                 .unlockedBy("has_item", has(Items.IRON_INGOT))
+                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refinery"));
+
+        ShapedRecipeBuilder.shaped(
+                        RecipeCategory.MISC,
+                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MIXER))
+                .pattern("121")
+                .pattern("343")
+                .pattern("131")
+                .define('1', Items.COPPER_BLOCK)
+                .define('2', Items.IRON_SHOVEL)
+                .define('3', Items.IRON_INGOT)
+                .define('4', Items.CAULDRON)
+                .unlockedBy("has_item", has(Items.CAULDRON))
+                .unlockedBy("has_item", has(Items.IRON_INGOT))
+                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                .unlockedBy("has_item", has(Items.IRON_SHOVEL))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mixer"));
+
+        ShapedRecipeBuilder.shaped(
+                        RecipeCategory.MISC,
+                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MIXER))
+                .pattern("121")
+                .pattern("343")
+                .pattern("151")
+                .define('1', Items.COPPER_BLOCK)
+                .define('2', Items.IRON_SHOVEL)
+                .define('3', Items.IRON_INGOT)
+                .define('4', Items.CAULDRON)
+                .define('5', Items.LAVA_BUCKET)
+                .unlockedBy("has_item", has(Items.CAULDRON))
+                .unlockedBy("has_item", has(Items.IRON_INGOT))
+                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                .unlockedBy("has_item", has(Items.IRON_SHOVEL))
+                .unlockedBy("has_item", has(Items.LAVA_BUCKET))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "heated_mixer"));
+
+        ShapedRecipeBuilder.shaped(
+                        RecipeCategory.MISC,
+                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.FERMENTATION_TANK))
+                .pattern("121")
+                .pattern("232")
+                .pattern("121")
+                .define('1', Items.COPPER_BLOCK)
+                .define('2', Items.IRON_INGOT)
+                .define('3', Items.CAULDRON)
+                .unlockedBy("has_item", has(Items.CAULDRON))
+                .unlockedBy("has_item", has(Items.IRON_INGOT))
+                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "fermentation_tank"));
+
+        ShapedRecipeBuilder.shaped(
+                        RecipeCategory.MISC,
+                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CATALYTIC_REFORMER))
+                .pattern("333")
+                .pattern("212")
+                .pattern("343")
+                .define('1', Items.CAULDRON)
+                .define('2', Items.IRON_INGOT)
+                .define('3', Items.COPPER_BLOCK)
+                .define('4', Items.LAVA_BUCKET)
+                .unlockedBy("has_item", has(Items.CAULDRON))
+                .unlockedBy("has_item", has(Items.IRON_INGOT))
+                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                .unlockedBy("has_item", has(Items.LAVA_BUCKET))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "catalytic_reformer"));
+
+        ShapedRecipeBuilder.shaped(
+                        RecipeCategory.MISC,
+                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OXIDATION_MACHINE))
+                .pattern("323")
+                .pattern("212")
+                .pattern("323")
+                .define('1', Items.CAULDRON)
+                .define('2', Items.IRON_INGOT)
+                .define('3', Items.OXIDIZED_COPPER)
+                .unlockedBy("has_item", has(Items.CAULDRON))
+                .unlockedBy("has_item", has(Items.IRON_INGOT))
+                .unlockedBy("has_item", has(Items.OXIDIZED_COPPER))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "oxidizer"));
+
+
+        ShapedRecipeBuilder.shaped(
+                        RecipeCategory.MISC,
+                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.AIR_EXTRACTOR))
+                .pattern("343")
+                .pattern("212")
+                .pattern("323")
+                .define('1', Items.CAULDRON)
+                .define('2', Items.IRON_INGOT)
+                .define('3', Items.COPPER_BLOCK)
+                .define('4', Items.HOPPER)
+                .unlockedBy("has_item", has(Items.CAULDRON))
+                .unlockedBy("has_item", has(Items.IRON_INGOT))
+                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                .unlockedBy("has_item", has(Items.HOPPER))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "air_extractor"));
+
+        ShapedRecipeBuilder.shaped(
+                        RecipeCategory.MISC,
+                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE))
+                .pattern("121")
+                .pattern("343")
+                .pattern("151")
+                .define('1', Items.COPPER_BLOCK)
+                .define('2', Items.LEVER)
+                .define('3', Items.REDSTONE)
+                .define('4', Items.CAULDRON)
+                .define('5', Items.IRON_INGOT)
+                .unlockedBy("has_item", has(Items.CAULDRON))
+                .unlockedBy("has_item", has(Items.IRON_INGOT))
+                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                .unlockedBy("has_item", has(Items.LEVER))
+                .unlockedBy("has_item", has(Items.REDSTONE))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "electrolysis_machine"));
 
         HashPressRecipeBuilder.press(
                         Ingredient.of(SubstanceCraftItems.MARIJUANA),
@@ -335,6 +450,26 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .unlockedBy("has_item", has(SubstanceCraftItems.YEAST))
                 .unlockedBy("has_item", has(SubstanceCraftItems.CORN))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "ferment_ethanol"));
+
+        FermentationTankRecipeBuilder.ferment(
+                        List.of(Ingredient.of(SubstanceCraftItems.YEAST), Ingredient.of(Items.SUGAR)),
+                        SubstanceCraftItems.YEAST,
+                        2000,
+                        FermentationTankRecipe::new
+                )
+                .unlockedBy("has_item", has(SubstanceCraftItems.YEAST))
+                .unlockedBy("has_item", has(Items.SUGAR))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "ferment_yeast"));
+
+        FermentationTankRecipeBuilder.ferment(
+                        List.of(Ingredient.of(SubstanceCraftItems.ERGOT), Ingredient.of(Items.SUGAR)),
+                        SubstanceCraftItems.ERGOT,
+                        2000,
+                        FermentationTankRecipe::new
+                )
+                .unlockedBy("has_item", has(SubstanceCraftItems.ERGOT))
+                .unlockedBy("has_item", has(Items.SUGAR))
+                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "ferment_ergot"));
 
     }
 

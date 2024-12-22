@@ -54,6 +54,7 @@ public class SubstanceCraftItems {
     public static final Item ETHANOL = registerItem("ethanol", new Item(new Item.Properties()));
     public static final Item YEAST = registerItem("yeast", new Item(new Item.Properties()));
     public static final Item HYDROCHLORIC_ACID = registerItem("hydrochloric_acid", new Item(new Item.Properties()));
+    public static final Item ERGOT = registerItem("ergot", new Item(new Item.Properties()));
 
     private static Item registerItem(String name, Item item) {
         return Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, name), item);
@@ -76,6 +77,7 @@ public class SubstanceCraftItems {
                             entries.accept(SubstanceCraftItems.DAB_RIG);
                             entries.accept(SubstanceCraftItems.CORN);
                             entries.accept(SubstanceCraftItems.YEAST);
+                            entries.accept(SubstanceCraftItems.ERGOT);
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HASH_PRESS));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.REFINERY));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CATALYTIC_REFORMER));
@@ -115,6 +117,7 @@ public class SubstanceCraftItems {
                             entries.accept(SubstanceCraftItems.PROPYLENE);
                             entries.accept(SubstanceCraftItems.DIESEL);
                             entries.accept(SubstanceCraftItems.ETHANOL);
+                            entries.accept(SubstanceCraftItems.AMMONIA);
                             entries.accept(SubstanceCraftItems.HYDROCHLORIC_ACID);
                         }).build());
 
