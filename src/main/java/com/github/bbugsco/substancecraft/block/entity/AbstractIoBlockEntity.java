@@ -1,5 +1,6 @@
 package com.github.bbugsco.substancecraft.block.entity;
 
+import com.github.bbugsco.substancecraft.block.blocks.GenericMenuBlock;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -11,6 +12,7 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -58,6 +60,14 @@ public abstract class AbstractIoBlockEntity extends BlockEntity implements Exten
         this.inventory = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
     }
 
+    protected void updateState(BlockState state, Level level, BlockPos pos) {
+        if (progress > 0) {
+            level.setBlockAndUpdate(pos, state.setValue(GenericMenuBlock.LIT, true));
+        } else if (state.getValue(GenericMenuBlock.LIT)) {
+            level.setBlockAndUpdate(pos, state.setValue(GenericMenuBlock.LIT, false));
+        }
+    }
+
     public int getSelectedRecipeIndex() {
         return this.selectedRecipeIndex;
     }
@@ -86,7 +96,7 @@ public abstract class AbstractIoBlockEntity extends BlockEntity implements Exten
     }
 
     protected boolean canInsertAmountIntoSlot(ItemStack result, int slot) {
-        return this.getItem(slot).getCount() + result.getCount() <= result.getMaxStackSize();
+            return this.getItem(slot).getCount() + result.getCount() <= result.getMaxStackSize();
     }
 
     protected boolean isSlotEmptyOrReceivable(int slot) {

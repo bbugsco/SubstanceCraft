@@ -102,6 +102,7 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Abst
 
     public void tick(Level level, BlockPos pos, BlockState state) {
         if(level.isClientSide) return;
+        super.updateState(state, level, pos);
         if (selectsRecipe) {
             selectedRecipeTick(level, pos, state);
         } else {
@@ -172,10 +173,19 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Abst
         int index = 0;
         for (ItemStack byproduct : byproducts) {
             if (getLevel() == null) return;
-            if (getLevel().random.nextInt(100) < byproduct.getCount() << 1) continue;
+            if (getLevel().random.nextInt(100) > byproduct.getCount() << 1) {
+                index++;
+                continue;
+            }
             int slot = BYPRODUCT_START_SLOT + index;
-            if (!canInsertItemIntoSlot(byproduct.getItem(), slot)) return;
-            if (!canInsertAmountIntoSlot(byproduct, slot)) return;
+            if (!canInsertItemIntoSlot(byproduct.getItem(), slot)) {
+                index++;
+                continue;
+            }
+            if (!canInsertAmountIntoSlot(byproduct, slot)) {
+                index++;
+                continue;
+            }
             setItem(slot, new ItemStack(byproduct.getItem(), getItem(slot).getCount() + 1));
             index++;
         }

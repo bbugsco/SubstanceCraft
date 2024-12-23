@@ -19,6 +19,8 @@ import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCon
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
+import java.util.List;
+
 public class SubstanceCraftLootTables {
 
 
@@ -26,6 +28,22 @@ public class SubstanceCraftLootTables {
         SubstanceCraft.LOGGER.info("Registering Mod Loot Tables for "  + SubstanceCraft.MOD_ID);
         addMarijuanaPlantSeedsToJungleTempleChestLoot();
         addFungiToCrops();
+        addCornSeedsToVillagerHouseChestLoot();
+    }
+
+    private static void addCornSeedsToVillagerHouseChestLoot() {
+        LootTableEvents.MODIFY.register((lootTable, tableBuilder, lootTableSource, provider) -> {
+            List<ResourceKey<LootTable>> chests = List.of(BuiltInLootTables.VILLAGE_PLAINS_HOUSE, BuiltInLootTables.VILLAGE_SAVANNA_HOUSE, BuiltInLootTables.VILLAGE_DESERT_HOUSE, BuiltInLootTables.VILLAGE_SNOWY_HOUSE);
+            if (lootTableSource.isBuiltin() && chests.contains(lootTable)) {
+                LootPool.Builder lootPool = new LootPool.Builder();
+                lootPool.setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CORN_CROP))
+                                .setWeight(7))
+                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 3.0F)));
+                tableBuilder.withPool(lootPool);
+            }
+        });
+
     }
 
     private static void addFungiToCrops() {

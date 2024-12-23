@@ -8,8 +8,19 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.minecraft.data.models.BlockModelGenerators;
 import net.minecraft.data.models.ItemModelGenerators;
+import net.minecraft.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.data.models.blockstates.Variant;
+import net.minecraft.data.models.blockstates.VariantProperties;
 import net.minecraft.data.models.model.ModelTemplates;
+import net.minecraft.data.models.model.TextureMapping;
+import net.minecraft.data.models.model.TextureSlot;
 import net.minecraft.data.models.model.TexturedModel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+
+import static net.minecraft.data.models.BlockModelGenerators.createBooleanModelDispatch;
+import static net.minecraft.data.models.BlockModelGenerators.createHorizontalFacingDispatch;
 
 public class ModelGenerator extends FabricModelProvider {
 
@@ -20,16 +31,16 @@ public class ModelGenerator extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         blockStateModelGenerator.createCrossBlock(SubstanceCraftBlocks.MARIJUANA_PLANT, BlockModelGenerators.TintState.NOT_TINTED, MarijuanaPlant.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
-        blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.REFINERY, TexturedModel.ORIENTABLE);
+        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.REFINERY, TexturedModel.ORIENTABLE, blockStateModelGenerator);
         blockStateModelGenerator.createTrivialCube(SubstanceCraftBlocks.OIL_SHALE);
-        blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE, TexturedModel.ORIENTABLE);
-        blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.OXIDATION_MACHINE, TexturedModel.ORIENTABLE);
-        blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.CATALYTIC_REFORMER, TexturedModel.ORIENTABLE);
-        blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.AIR_EXTRACTOR, TexturedModel.ORIENTABLE);
+        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE, TexturedModel.ORIENTABLE, blockStateModelGenerator);
+        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.OXIDATION_MACHINE, TexturedModel.ORIENTABLE, blockStateModelGenerator);
+        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.CATALYTIC_REFORMER, TexturedModel.ORIENTABLE, blockStateModelGenerator);
+        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.AIR_EXTRACTOR, TexturedModel.ORIENTABLE, blockStateModelGenerator);
         blockStateModelGenerator.createTrivialCube(SubstanceCraftBlocks.SALT);
-        blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.MIXER, TexturedModel.ORIENTABLE);
-        blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.HEATED_MIXER, TexturedModel.ORIENTABLE);
-        blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.FERMENTATION_TANK, TexturedModel.ORIENTABLE);
+        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.MIXER, TexturedModel.ORIENTABLE, blockStateModelGenerator);
+        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.HEATED_MIXER, TexturedModel.ORIENTABLE, blockStateModelGenerator);
+        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.FERMENTATION_TANK, TexturedModel.ORIENTABLE, blockStateModelGenerator);
         blockStateModelGenerator.createCrossBlock(SubstanceCraftBlocks.CORN_CROP, BlockModelGenerators.TintState.TINTED, CornCrop.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
     }
 
@@ -73,6 +84,19 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.generateFlatItem(SubstanceCraftItems.YEAST, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(SubstanceCraftItems.HYDROCHLORIC_ACID, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(SubstanceCraftItems.ERGOT, ModelTemplates.FLAT_ITEM);
+    }
+
+    private void createTopBottomSideFrontAndFrontOnTexture(Block block, TexturedModel.Provider provider, BlockModelGenerators blockModelGenerators) {
+        ResourceLocation texture = provider.create(block, blockModelGenerators.modelOutput);
+        ResourceLocation textureOn = TextureMapping.getBlockTexture(block, "_front_on");
+        ResourceLocation anotherOnTexture = provider.get(block)
+                .updateTextures(textureMapping -> textureMapping.put(TextureSlot.FRONT, textureOn))
+                .createWithSuffix(block, "_on", blockModelGenerators.modelOutput);
+        blockModelGenerators.blockStateOutput.accept(
+                        MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, texture)) .
+                                with(createBooleanModelDispatch(BlockStateProperties.LIT, anotherOnTexture, texture)).
+                                with(createHorizontalFacingDispatch()));
+
     }
 
 }

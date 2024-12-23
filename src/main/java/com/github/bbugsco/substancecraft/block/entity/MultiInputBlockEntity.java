@@ -105,6 +105,7 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
 
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide) return;
+        super.updateState(state, level, pos);
         if (selectsRecipe) {
             selectedRecipeTick(level, pos, state);
         } else {
@@ -179,16 +180,23 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
 
     private void byproduct(MultipleInputRecipe recipe) {
         List<ItemStack> byproducts = recipe.getByproducts();
-        if (byproducts.isEmpty()) {
-            return;
-        }
+        if (byproducts.isEmpty()) { return; }
         int index = 0;
         for (ItemStack byproduct : byproducts) {
             if (getLevel() == null) return;
-            if (getLevel().random.nextInt(100) < byproduct.getCount() << 1) continue;
+            if (getLevel().random.nextInt(100) > byproduct.getCount() << 1) {
+                index++;
+                continue;
+            }
             int slot = FIRST_BYPRODUCT_SLOT + index;
-            if (!canInsertItemIntoSlot(byproduct.getItem(), slot)) return;
-            if (!canInsertAmountIntoSlot(byproduct, slot)) return;
+            if (!canInsertItemIntoSlot(byproduct.getItem(), slot)) {
+                index++;
+                continue;
+            }
+            if (!canInsertAmountIntoSlot(byproduct, slot)) {
+                index++;
+                continue;
+            }
             setItem(slot, new ItemStack(byproduct.getItem(), getItem(slot).getCount() + 1));
             index++;
         }
