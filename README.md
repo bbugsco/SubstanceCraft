@@ -2,7 +2,7 @@
 1.21.1 Fabric mod with chemistry features and drugs. 
 Requires fabric API
 
-Compiling from source: Requires java 23 and gradle 8.10
+Compiling from source: Requires java 21 and gradle 8.10
 
 Disclaimer: for funsies only, I do not promote the selling, distribution, or consumption of drugs outside of this mod.
 

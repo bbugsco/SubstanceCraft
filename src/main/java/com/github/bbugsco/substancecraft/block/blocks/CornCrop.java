@@ -79,10 +79,10 @@ public class CornCrop extends CropBlock {
     @Override
     public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
         BlockPos down = pos.below();
-        if(worldIn.getBlockState(down).is(this))
-            return  !worldIn.getBlockState(down).getValue(this.getUpperProperty())
+        if (worldIn.getBlockState(down).is(this))
+            return !worldIn.getBlockState(down).getValue(this.getUpperProperty())
                     && (worldIn.getRawBrightness(pos, 0) >= 8 || worldIn.canSeeSky(pos))
-                    && this.getAge(worldIn.getBlockState(down))>= this.getGrowUpperAge();
+                    && this.getAge(worldIn.getBlockState(down)) >= this.getGrowUpperAge();
         return super.canSurvive(state, worldIn, pos);
     }
 
@@ -90,19 +90,21 @@ public class CornCrop extends CropBlock {
     protected void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         float growthRate = getGrowthSpeed(this, level, pos);
         int age = this.getAge(state);
-        if (level.getRawBrightness(pos, 0) >= 9) {
+        if (this.defaultBlockState().canSurvive(level, pos)) {
             if (random.nextInt((int) (25.0F / growthRate) + 1) == 0) {
-               grow(level, pos, state, age + 1);
+                grow(level, pos, state, age + 1);
             }
         }
         if (state.getValue(UPPER)) {
             return;
         }
         if (age >= this.getGrowUpperAge() && level.getBlockState(pos.above(1)).is(Blocks.AIR)) {
-            if (random.nextInt((int) (25.0F / growthRate) + 1) == 0 || (age + 1 == 7)) {
-                level.setBlock(pos.above(), this.defaultBlockState()
-                        .setValue(this.getUpperProperty(), true)
-                        .setValue(this.getAgeProperty(), 0), Block.UPDATE_ALL);
+            if (this.defaultBlockState().canSurvive(level, pos)) {
+                if (random.nextInt((int) (25.0F / growthRate) + 1) == 0 || (age + 1 == 7)) {
+                    level.setBlock(pos.above(), this.defaultBlockState()
+                            .setValue(this.getUpperProperty(), true)
+                            .setValue(this.getAgeProperty(), 0), Block.UPDATE_ALL);
+                }
             }
         }
     }
@@ -113,8 +115,7 @@ public class CornCrop extends CropBlock {
         BlockState upperState = level.getBlockState(pos.above());
         if (upperState.is(this)) {
             valid = !(this.isMaxAge(upperState));
-        }
-        else if (state.getValue(this.getUpperProperty())) {
+        } else if (state.getValue(this.getUpperProperty())) {
             valid = !(this.isMaxAge(state));
         } else {
             valid = true;
@@ -130,7 +131,9 @@ public class CornCrop extends CropBlock {
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         int newAge = Math.min(this.getAge(state) + this.getBonemealAgeIncrease(level), 15);
-        grow(level, pos, state, newAge);
+        if (this.defaultBlockState().canSurvive(level, pos)) {
+            grow(level, pos, state, newAge);
+        }
     }
 
     private void grow(ServerLevel level, BlockPos pos, BlockState state, int targetAge) {

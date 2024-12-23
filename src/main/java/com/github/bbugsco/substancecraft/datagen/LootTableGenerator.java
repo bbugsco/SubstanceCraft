@@ -7,11 +7,9 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricBlockLootTableProvider;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.loot.packs.VanillaBlockLoot;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.storage.loot.IntRange;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -47,6 +45,10 @@ public class LootTableGenerator extends FabricBlockLootTableProvider {
                                 .apply(SetItemCountFunction.setCount(UniformGenerator.between(2.0F, 4.0F)))
                                 .apply(ApplyBonusCount.addUniformBonusCount(registryLookup.getOrThrow(Enchantments.FORTUNE)))
                                 .apply(LimitCount.limitCount(IntRange.range(1, 4))))));
+
+        add(SubstanceCraftBlocks.FERMENTATION_TANK, createNameableBlockEntityTable(SubstanceCraftBlocks.FERMENTATION_TANK));
+        add(SubstanceCraftBlocks.MIXER, createNameableBlockEntityTable(SubstanceCraftBlocks.MIXER));
+        add(SubstanceCraftBlocks.HEATED_MIXER, createNameableBlockEntityTable(SubstanceCraftBlocks.HEATED_MIXER));
 
         add(SubstanceCraftBlocks.CORN_CROP, this.createCropDrops(
                 SubstanceCraftBlocks.CORN_CROP, SubstanceCraftItems.CORN, SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CORN_CROP),

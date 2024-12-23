@@ -79,7 +79,6 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .define('1', Items.CAULDRON)
                 .define('2', Items.IRON_INGOT)
                 .define('3', Items.COPPER_BLOCK)
-                .unlockedBy("has_item", has(Items.CAULDRON))
                 .unlockedBy("has_item", has(Items.IRON_INGOT))
                 .unlockedBy("has_item", has(Items.COPPER_BLOCK))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refinery"));
@@ -94,15 +93,13 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .define('2', Items.IRON_SHOVEL)
                 .define('3', Items.IRON_INGOT)
                 .define('4', Items.CAULDRON)
-                .unlockedBy("has_item", has(Items.CAULDRON))
                 .unlockedBy("has_item", has(Items.IRON_INGOT))
                 .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .unlockedBy("has_item", has(Items.IRON_SHOVEL))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mixer"));
 
         ShapedRecipeBuilder.shaped(
                         RecipeCategory.MISC,
-                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MIXER))
+                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HEATED_MIXER))
                 .pattern("121")
                 .pattern("343")
                 .pattern("151")
@@ -111,11 +108,8 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .define('3', Items.IRON_INGOT)
                 .define('4', Items.CAULDRON)
                 .define('5', Items.LAVA_BUCKET)
-                .unlockedBy("has_item", has(Items.CAULDRON))
                 .unlockedBy("has_item", has(Items.IRON_INGOT))
                 .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .unlockedBy("has_item", has(Items.IRON_SHOVEL))
-                .unlockedBy("has_item", has(Items.LAVA_BUCKET))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "heated_mixer"));
 
         ShapedRecipeBuilder.shaped(
@@ -127,7 +121,6 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .define('1', Items.COPPER_BLOCK)
                 .define('2', Items.IRON_INGOT)
                 .define('3', Items.CAULDRON)
-                .unlockedBy("has_item", has(Items.CAULDRON))
                 .unlockedBy("has_item", has(Items.IRON_INGOT))
                 .unlockedBy("has_item", has(Items.COPPER_BLOCK))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "fermentation_tank"));
@@ -142,10 +135,8 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .define('2', Items.IRON_INGOT)
                 .define('3', Items.COPPER_BLOCK)
                 .define('4', Items.LAVA_BUCKET)
-                .unlockedBy("has_item", has(Items.CAULDRON))
                 .unlockedBy("has_item", has(Items.IRON_INGOT))
                 .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .unlockedBy("has_item", has(Items.LAVA_BUCKET))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "catalytic_reformer"));
 
         ShapedRecipeBuilder.shaped(
@@ -157,9 +148,8 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .define('1', Items.CAULDRON)
                 .define('2', Items.IRON_INGOT)
                 .define('3', Items.OXIDIZED_COPPER)
-                .unlockedBy("has_item", has(Items.CAULDRON))
                 .unlockedBy("has_item", has(Items.IRON_INGOT))
-                .unlockedBy("has_item", has(Items.OXIDIZED_COPPER))
+                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "oxidizer"));
 
 
@@ -173,10 +163,8 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .define('2', Items.IRON_INGOT)
                 .define('3', Items.COPPER_BLOCK)
                 .define('4', Items.HOPPER)
-                .unlockedBy("has_item", has(Items.CAULDRON))
                 .unlockedBy("has_item", has(Items.IRON_INGOT))
                 .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .unlockedBy("has_item", has(Items.HOPPER))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "air_extractor"));
 
         ShapedRecipeBuilder.shaped(
@@ -190,11 +178,8 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .define('3', Items.REDSTONE)
                 .define('4', Items.CAULDRON)
                 .define('5', Items.IRON_INGOT)
-                .unlockedBy("has_item", has(Items.CAULDRON))
                 .unlockedBy("has_item", has(Items.IRON_INGOT))
                 .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .unlockedBy("has_item", has(Items.LEVER))
-                .unlockedBy("has_item", has(Items.REDSTONE))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "electrolysis_machine"));
 
         HashPressRecipeBuilder.press(
