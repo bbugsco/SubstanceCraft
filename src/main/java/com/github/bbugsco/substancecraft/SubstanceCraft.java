@@ -24,16 +24,6 @@ public class SubstanceCraft implements ModInitializer, DataGeneratorEntrypoint {
     public static final String MOD_ID = "substancecraft";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    /*
-     TODO:
-     - barley, hops
-     - fermentation tank (vinegar, alcohol)
-     - dmt
-     - bho/butane
-     -
-     - create abstract class for scroll menu screen (multipleInputScreen & oneInputScreen to extend)
-     */
-
     @Override
     public void onInitialize() {
         SubstanceCraftBlocks.registerBlocks();

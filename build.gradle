@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.7-SNAPSHOT'
+    id 'fabric-loom' version '1.8-SNAPSHOT'
 }
 
 fabricApi {
@@ -44,7 +44,7 @@ processResources {
     }
 }
 
-def targetJavaVersion = 21
+def targetJavaVersion = 23
 
 tasks.withType(JavaCompile).configureEach {
     it.options.encoding = "UTF-8"
