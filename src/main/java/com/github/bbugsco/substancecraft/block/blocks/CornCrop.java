@@ -5,11 +5,13 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.CropBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -24,18 +26,7 @@ public class CornCrop extends CropBlock {
     public static final BooleanProperty UPPER = BooleanProperty.create("upper");
     private final MapCodec<CornCrop> CODEC = simpleCodec(CornCrop::new);
 
-    private static final VoxelShape[] UPPER_SHAPE_BY_AGE = new VoxelShape[] {
-            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
-            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 6.0D, 16.0D),
-            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D),
-            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D),
-            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
-            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
-            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D),
-            Block.box(0.0D, 0.0D, 0.0D, 16.0D, 14.0D, 16.0D)
-    };
-
-    private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[] {
+    private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D),
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D),
             Block.box(0.0D, 0.0D, 0.0D, 16.0D, 12.0D, 16.0D),
@@ -57,13 +48,18 @@ public class CornCrop extends CropBlock {
     }
 
     @Override
+    public @NotNull ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
+        return new ItemStack(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CORN_CROP));
+    }
+
+    @Override
     protected @NotNull ItemLike getBaseSeedId() {
         return SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CORN_CROP);
     }
 
     @Override
     protected @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return state.getValue(CornCrop.UPPER) ? UPPER_SHAPE_BY_AGE[state.getValue(this.getAgeProperty())]: SHAPE_BY_AGE[state.getValue(this.getAgeProperty())];
+        return SHAPE_BY_AGE[state.getValue(this.getAgeProperty())];
     }
 
     public BooleanProperty getUpperProperty() {
@@ -76,7 +72,18 @@ public class CornCrop extends CropBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(AGE, UPPER);
+        builder.add(AGE);
+        builder.add(UPPER);
+    }
+
+    @Override
+    public boolean canSurvive(BlockState state, LevelReader worldIn, BlockPos pos) {
+        BlockPos down = pos.below();
+        if(worldIn.getBlockState(down).is(this))
+            return  !worldIn.getBlockState(down).getValue(this.getUpperProperty())
+                    && (worldIn.getRawBrightness(pos, 0) >= 8 || worldIn.canSeeSky(pos))
+                    && this.getAge(worldIn.getBlockState(down))>= this.getGrowUpperAge();
+        return super.canSurvive(state, worldIn, pos);
     }
 
     @Override
@@ -84,32 +91,35 @@ public class CornCrop extends CropBlock {
         float growthRate = getGrowthSpeed(this, level, pos);
         int age = this.getAge(state);
         if (level.getRawBrightness(pos, 0) >= 9) {
-            if (age < this.getMaxAge()) {
-                if (random.nextInt((int)(25.0F / growthRate) + 1) == 0) {
-                    level.setBlock(pos, this.getStateForAge(age + 1), 2);
-                }
+            if (random.nextInt((int) (25.0F / growthRate) + 1) == 0) {
+               grow(level, pos, state, age + 1);
             }
-        } if (state.getValue(UPPER)) {
+        }
+        if (state.getValue(UPPER)) {
             return;
-        } if (age >= this.getGrowUpperAge()) {
-            // if (random.nextInt((int)(25.0F / growthRate) + 1) == 0) {
-
-                level.setBlock(pos.above(1), state.setValue(AGE, 0).setValue(UPPER, true), Block.UPDATE_CLIENTS);
-                level.setBlockAndUpdate(pos.above(), this.defaultBlockState().setValue(this.getUpperProperty(), true));
-            // }
+        }
+        if (age >= this.getGrowUpperAge() && level.getBlockState(pos.above(1)).is(Blocks.AIR)) {
+            if (random.nextInt((int) (25.0F / growthRate) + 1) == 0 || (age + 1 == 7)) {
+                level.setBlock(pos.above(), this.defaultBlockState()
+                        .setValue(this.getUpperProperty(), true)
+                        .setValue(this.getAgeProperty(), 0), Block.UPDATE_ALL);
+            }
         }
     }
 
     @Override
     public boolean isValidBonemealTarget(LevelReader level, BlockPos pos, BlockState state) {
+        boolean valid;
         BlockState upperState = level.getBlockState(pos.above());
         if (upperState.is(this)) {
-            return !(this.isMaxAge(upperState));
+            valid = !(this.isMaxAge(upperState));
         }
-        if (state.getValue(this.getUpperProperty())) {
-            return !(this.isMaxAge(state));
+        else if (state.getValue(this.getUpperProperty())) {
+            valid = !(this.isMaxAge(state));
+        } else {
+            valid = true;
         }
-        return true;
+        return valid;
     }
 
     @Override
@@ -119,27 +129,35 @@ public class CornCrop extends CropBlock {
 
     @Override
     public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
-        int ageGrowth = Math.min(this.getAge(state) + this.getBonemealAgeIncrease(level), 15);
-        if (ageGrowth <= this.getMaxAge()) {
-            level.setBlockAndUpdate(pos, state.setValue(AGE, ageGrowth));
+        int newAge = Math.min(this.getAge(state) + this.getBonemealAgeIncrease(level), 15);
+        grow(level, pos, state, newAge);
+    }
+
+    private void grow(ServerLevel level, BlockPos pos, BlockState state, int targetAge) {
+        if (targetAge <= this.getMaxAge()) {
+            level.setBlockAndUpdate(pos, state.setValue(AGE, targetAge));
         } else {
             level.setBlockAndUpdate(pos, state.setValue(AGE, this.getMaxAge()));
             if (state.getValue(this.getUpperProperty())) {
                 return;
             }
-            BlockState top = level.getBlockState(pos.above());
-            if (top.is(this)) {
-                BonemealableBlock growable = (BonemealableBlock) level.getBlockState(pos.above()).getBlock();
-                if (growable.isValidBonemealTarget(level, pos.above(), top)) {
-                    growable.performBonemeal(level, level.random, pos.above(), top);
-                }
-            } else {
-                int remainingGrowth = ageGrowth - this.getMaxAge() - 1;
-                if (this.defaultBlockState().canSurvive(level, pos.above()) && level.isEmptyBlock(pos.above())) {
-                    level.setBlock(pos.above(), this.defaultBlockState()
-                            .setValue(this.getUpperProperty(), true)
-                            .setValue(this.getAgeProperty(), remainingGrowth), 3);
-                }
+            bonemealAbove(level, targetAge - this.getMaxAge() - 1, pos);
+        }
+    }
+
+
+    private void bonemealAbove(ServerLevel level, int age, BlockPos pos) {
+        BlockState top = level.getBlockState(pos.above());
+        if (top.is(this)) {
+            BonemealableBlock growable = (BonemealableBlock) level.getBlockState(pos.above()).getBlock();
+            if (growable.isValidBonemealTarget(level, pos.above(), top)) {
+                growable.performBonemeal(level, level.random, pos.above(), top);
+            }
+        } else {
+            if (this.defaultBlockState().canSurvive(level, pos.above()) && level.isEmptyBlock(pos.above())) {
+                level.setBlock(pos.above(), this.defaultBlockState()
+                        .setValue(this.getUpperProperty(), true)
+                        .setValue(this.getAgeProperty(), age), Block.UPDATE_ALL);
             }
         }
     }

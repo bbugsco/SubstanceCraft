@@ -13,8 +13,10 @@
   "block.substancecraft.mixer": "Mixer",
   "block.substancecraft.heated_mixer": "Heated Mixer",
   "block.substancecraft.fermentation_tank": "Fermentation Tank",
+  "block.substancecraft.corn_crop": "Corn Seeds",
 
   "effect.minecraft.hunger": "Munchies",
+  "effect.minecraft.speed": "Zoomies",
 
   "item.substancecraft.marijuana": "Marijuana",
   "item.substancecraft.marijuana_trim": "Marijuana Trim",

@@ -76,6 +76,7 @@ public class SubstanceCraftItems {
                             entries.accept(SubstanceCraftItems.EMPTY_DAB_RIG);
                             entries.accept(SubstanceCraftItems.DAB_RIG);
                             entries.accept(SubstanceCraftItems.CORN);
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CORN_CROP));
                             entries.accept(SubstanceCraftItems.YEAST);
                             entries.accept(SubstanceCraftItems.ERGOT);
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HASH_PRESS));
