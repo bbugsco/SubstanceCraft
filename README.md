@@ -6,8 +6,6 @@ Compiling from source: Requires java 21 and gradle 8.10
 
 Disclaimer: for funsies only, I do not promote the selling, distribution, or consumption of drugs outside of this mod.
 
-Note: I have not yet finished textures for block entities, the current texture is just a placeholder. In the near future I will work on textures (which will be mid at best, I am not a texture artist)
-
 # Features
 ## Drugs
 ### Marijuana
