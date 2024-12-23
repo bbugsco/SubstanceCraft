@@ -1,6 +1,7 @@
 package com.github.bbugsco.substancecraft.datagen;
 
 import com.github.bbugsco.substancecraft.block.SubstanceCraftBlocks;
+import com.github.bbugsco.substancecraft.block.blocks.CornCrop;
 import com.github.bbugsco.substancecraft.block.blocks.MarijuanaPlant;
 import com.github.bbugsco.substancecraft.items.SubstanceCraftItems;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -29,7 +30,7 @@ public class ModelGenerator extends FabricModelProvider {
         blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.MIXER, TexturedModel.ORIENTABLE);
         blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.HEATED_MIXER, TexturedModel.ORIENTABLE);
         blockStateModelGenerator.createHorizontallyRotatedBlock(SubstanceCraftBlocks.FERMENTATION_TANK, TexturedModel.ORIENTABLE);
-
+        blockStateModelGenerator.createCrossBlock(SubstanceCraftBlocks.CORN_CROP, BlockModelGenerators.TintState.TINTED, CornCrop.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
     }
 
     @Override

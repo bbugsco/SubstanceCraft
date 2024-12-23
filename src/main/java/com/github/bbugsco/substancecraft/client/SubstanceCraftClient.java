@@ -18,6 +18,7 @@ public class SubstanceCraftClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         BlockRenderLayerMap.INSTANCE.putBlock(SubstanceCraftBlocks.MARIJUANA_PLANT, RenderType.cutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(SubstanceCraftBlocks.CORN_CROP, RenderType.cutout());
         BlockEntityRenderers.register(SubstanceCraftBlockEntities.HASH_PRESS, context -> new HashPressBlockEntityRenderer());
 
         SubstanceCraftScreens.registerScreens();

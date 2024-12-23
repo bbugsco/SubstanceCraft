@@ -3,6 +3,7 @@ package com.github.bbugsco.substancecraft.block;
 import com.github.bbugsco.substancecraft.SubstanceCraft;
 import com.github.bbugsco.substancecraft.block.blocks.AirExtractor;
 import com.github.bbugsco.substancecraft.block.blocks.CatalyticReformer;
+import com.github.bbugsco.substancecraft.block.blocks.CornCrop;
 import com.github.bbugsco.substancecraft.block.blocks.ElectrolysisMachine;
 import com.github.bbugsco.substancecraft.block.blocks.FermentationTank;
 import com.github.bbugsco.substancecraft.block.blocks.HashPress;
@@ -17,6 +18,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -40,6 +42,7 @@ public class SubstanceCraftBlocks {
     public static final Block MIXER = registerBlock("mixer", new Mixer(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
     public static final Block HEATED_MIXER = registerBlock("heated_mixer", new HeatedMixer(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
     public static final Block FERMENTATION_TANK = registerBlock("fermentation_tank", new FermentationTank(BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE)));
+    public static final Block CORN_CROP = registerBlock("corn_crop", new CornCrop(BlockBehaviour.Properties.ofFullCopy(Blocks.WHEAT)));
 
     public static Item getBlockItem(Block block) {
         return BLOCK_ITEMS.get(block);
