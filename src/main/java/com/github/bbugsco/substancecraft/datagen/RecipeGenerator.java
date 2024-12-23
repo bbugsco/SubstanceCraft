@@ -147,7 +147,7 @@ public class RecipeGenerator extends FabricRecipeProvider {
                 .pattern("323")
                 .define('1', Items.CAULDRON)
                 .define('2', Items.IRON_INGOT)
-                .define('3', Items.OXIDIZED_COPPER)
+                .define('3', Items.COPPER_BLOCK)
                 .unlockedBy("has_item", has(Items.IRON_INGOT))
                 .unlockedBy("has_item", has(Items.COPPER_BLOCK))
                 .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "oxidizer"));
