@@ -1,0 +1,13 @@
+{
+  "type": "substancecraft:mixer",
+  "byproducts": [],
+  "ingredients": [
+    "substancecraft:salt",
+    "minecraft:potion"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:brine"
+  },
+  "time": 800
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "substancecraft:block/electrolysis_bottom",
+    "front": "substancecraft:block/electrolysis_front",
+    "side": "substancecraft:block/electrolysis_side",
+    "top": "substancecraft:block/electrolysis_top"
+  }
+}

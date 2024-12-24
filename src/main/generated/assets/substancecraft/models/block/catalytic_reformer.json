@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "substancecraft:block/catalytic_reformer_bottom",
+    "front": "substancecraft:block/catalytic_reformer_front",
+    "side": "substancecraft:block/catalytic_reformer_side",
+    "top": "substancecraft:block/catalytic_reformer_top"
+  }
+}

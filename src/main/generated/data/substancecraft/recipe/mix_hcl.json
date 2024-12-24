@@ -1,0 +1,14 @@
+{
+  "type": "substancecraft:heated_mixer",
+  "byproducts": [],
+  "ingredients": [
+    "substancecraft:chlorine",
+    "substancecraft:hydrogen",
+    "minecraft:potion"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:hydrochloric_acid"
+  },
+  "time": 800
+}

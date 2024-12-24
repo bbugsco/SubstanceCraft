@@ -1,0 +1,15 @@
+{
+  "type": "substancecraft:refinery",
+  "byproducts": [
+    {
+      "count": 20,
+      "id": "substancecraft:natural_gas"
+    }
+  ],
+  "ingredient": "substancecraft:oil_shale",
+  "result": {
+    "count": 1,
+    "id": "substancecraft:oil"
+  },
+  "time": 1000
+}

@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "1": "minecraft:copper_block",
+    "2": "minecraft:iron_shovel",
+    "3": "minecraft:iron_ingot",
+    "4": "minecraft:cauldron"
+  },
+  "pattern": [
+    "121",
+    "343",
+    "131"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:mixer"
+  }
+}

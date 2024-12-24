@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "substancecraft:block/heated_mixer_bottom",
+    "front": "substancecraft:block/heated_mixer_front",
+    "side": "substancecraft:block/heated_mixer_side",
+    "top": "substancecraft:block/heated_mixer_top"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "substancecraft:refinery",
+  "byproducts": [],
+  "ingredient": "substancecraft:oil",
+  "result": {
+    "count": 1,
+    "id": "substancecraft:gasoline"
+  },
+  "time": 1000
+}

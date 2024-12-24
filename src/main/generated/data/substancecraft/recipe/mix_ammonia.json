@@ -1,0 +1,13 @@
+{
+  "type": "substancecraft:heated_mixer",
+  "byproducts": [],
+  "ingredients": [
+    "substancecraft:nitrogen",
+    "substancecraft:hydrogen"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:ammonia"
+  },
+  "time": 800
+}

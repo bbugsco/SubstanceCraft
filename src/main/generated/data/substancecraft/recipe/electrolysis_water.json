@@ -1,0 +1,15 @@
+{
+  "type": "substancecraft:electrolysis",
+  "byproducts": [
+    {
+      "count": 25,
+      "id": "substancecraft:oxygen"
+    }
+  ],
+  "ingredient": "minecraft:potion",
+  "result": {
+    "count": 1,
+    "id": "substancecraft:hydrogen"
+  },
+  "time": 1000
+}

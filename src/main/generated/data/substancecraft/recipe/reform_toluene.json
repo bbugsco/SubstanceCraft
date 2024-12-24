@@ -1,0 +1,10 @@
+{
+  "type": "substancecraft:catalytic_reformer",
+  "byproducts": [],
+  "ingredient": "substancecraft:petroleum_naphtha",
+  "result": {
+    "count": 1,
+    "id": "substancecraft:toluene"
+  },
+  "time": 1000
+}

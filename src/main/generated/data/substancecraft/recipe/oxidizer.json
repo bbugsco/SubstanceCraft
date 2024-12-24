@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "1": "minecraft:cauldron",
+    "2": "minecraft:iron_ingot",
+    "3": "minecraft:copper_block"
+  },
+  "pattern": [
+    "323",
+    "212",
+    "323"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:oxidation_machine"
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "type": "substancecraft:hash_press",
+  "byproducts": [],
+  "ingredient": "substancecraft:marijuana",
+  "result": {
+    "count": 1,
+    "id": "substancecraft:hash"
+  },
+  "time": 1000
+}

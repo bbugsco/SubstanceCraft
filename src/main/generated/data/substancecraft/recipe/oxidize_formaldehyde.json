@@ -1,0 +1,10 @@
+{
+  "type": "substancecraft:oxidizer",
+  "byproducts": [],
+  "ingredient": "substancecraft:methanol",
+  "result": {
+    "count": 1,
+    "id": "substancecraft:formaldehyde"
+  },
+  "time": 1000
+}

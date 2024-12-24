@@ -1,0 +1,19 @@
+{
+  "type": "substancecraft:electrolysis",
+  "byproducts": [
+    {
+      "count": 15,
+      "id": "substancecraft:chlorine"
+    },
+    {
+      "count": 15,
+      "id": "substancecraft:hydrogen"
+    }
+  ],
+  "ingredient": "substancecraft:brine",
+  "result": {
+    "count": 1,
+    "id": "substancecraft:sodium_hydroxide"
+  },
+  "time": 1000
+}

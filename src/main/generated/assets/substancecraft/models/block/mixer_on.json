@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "substancecraft:block/mixer_bottom",
+    "front": "substancecraft:block/mixer_front_on",
+    "side": "substancecraft:block/mixer_side",
+    "top": "substancecraft:block/mixer_top"
+  }
+}
