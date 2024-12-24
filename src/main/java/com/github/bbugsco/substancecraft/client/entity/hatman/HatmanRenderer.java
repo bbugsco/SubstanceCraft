@@ -11,16 +11,21 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
-public class HatmanRenderer extends MobRenderer<HatMan, HatManModel<HatMan>> {
+public class HatmanRenderer extends MobRenderer<HatMan, HatmanRenderState, HatManModel> {
 
     private static final ResourceLocation LOCATION = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/entity/hatman.png");
 
     public HatmanRenderer(EntityRendererProvider.Context context) {
-        super(context, new HatManModel<>(context.bakeLayer(SubstanceCraftEntityRenderers.HATMAN_MODEL)), 0.5F);
+        super(context, new HatManModel(context.bakeLayer(SubstanceCraftEntityRenderers.HATMAN_MODEL)), 0.5F);
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(HatMan entity) {
+    public @NotNull HatmanRenderState createRenderState() {
+        return new HatmanRenderState();
+    }
+
+    @Override
+    public @NotNull ResourceLocation getTextureLocation(HatmanRenderState livingEntityRenderState) {
         return LOCATION;
     }
 }

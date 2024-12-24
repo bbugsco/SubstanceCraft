@@ -20,6 +20,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.List;
+import java.util.Optional;
 
 public class SubstanceCraftLootTables {
 
@@ -47,34 +48,34 @@ public class SubstanceCraftLootTables {
     }
 
     private static void addFungiToCrops() {
-        ResourceKey<LootTable> POTATO_LOOT_TABLE = Blocks.POTATOES.getLootTable();
-        ResourceKey<LootTable> CARROT_LOOT_TABLE = Blocks.CARROTS.getLootTable();
-        ResourceKey<LootTable> WHEAT_LOOT_TABLE = Blocks.WHEAT.getLootTable();
-        ResourceKey<LootTable> BEETROOT_LOOT_TABLE = Blocks.BEETROOTS.getLootTable();
+        Optional<ResourceKey<LootTable>> POTATO_LOOT_TABLE = Blocks.POTATOES.getLootTable();
+        Optional<ResourceKey<LootTable>> CARROT_LOOT_TABLE = Blocks.CARROTS.getLootTable();
+        Optional<ResourceKey<LootTable>> WHEAT_LOOT_TABLE = Blocks.WHEAT.getLootTable();
+        Optional<ResourceKey<LootTable>> BEETROOT_LOOT_TABLE = Blocks.BEETROOTS.getLootTable();
 
         LootTableEvents.MODIFY.register((lootTable, tableBuilder, lootTableSource, provider) -> {
-            if (lootTableSource.isBuiltin() && POTATO_LOOT_TABLE.equals(lootTable)) {
+            if (POTATO_LOOT_TABLE.isPresent() && lootTableSource.isBuiltin() && POTATO_LOOT_TABLE.get().equals(lootTable)) {
                 LootItemCondition.Builder fullyGrownCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.POTATOES).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PotatoBlock.AGE, 7));
                 LootPool.Builder lootPool = new LootPool.Builder();
                 lootPool.when(fullyGrownCondition)
                         .add(LootItem.lootTableItem(SubstanceCraftItems.ERGOT).when(LootItemRandomChanceCondition.randomChance(0.0015F)))
                         .add(LootItem.lootTableItem(SubstanceCraftItems.YEAST).when(LootItemRandomChanceCondition.randomChance(0.0015F)));
                 tableBuilder.withPool(lootPool);
-            } else if (lootTableSource.isBuiltin() && CARROT_LOOT_TABLE.equals(lootTable)) {
+            } else if (CARROT_LOOT_TABLE.isPresent() && lootTableSource.isBuiltin() && CARROT_LOOT_TABLE.get().equals(lootTable)) {
                 LootItemCondition.Builder fullyGrownCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.CARROTS).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PotatoBlock.AGE, 7));
                 LootPool.Builder lootPool = new LootPool.Builder();
                 lootPool.when(fullyGrownCondition)
                         .add(LootItem.lootTableItem(SubstanceCraftItems.ERGOT).when(LootItemRandomChanceCondition.randomChance(0.0015F)))
                         .add(LootItem.lootTableItem(SubstanceCraftItems.YEAST).when(LootItemRandomChanceCondition.randomChance(0.0015F)));
                 tableBuilder.withPool(lootPool);
-            } else if (lootTableSource.isBuiltin() && WHEAT_LOOT_TABLE.equals(lootTable)) {
+            } else if (WHEAT_LOOT_TABLE.isPresent() && lootTableSource.isBuiltin() && WHEAT_LOOT_TABLE.get().equals(lootTable)) {
                 LootItemCondition.Builder fullyGrownCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.WHEAT).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PotatoBlock.AGE, 7));
                 LootPool.Builder lootPool = new LootPool.Builder();
                 lootPool.when(fullyGrownCondition)
                         .add(LootItem.lootTableItem(SubstanceCraftItems.ERGOT).when(LootItemRandomChanceCondition.randomChance(0.0015F)))
                         .add(LootItem.lootTableItem(SubstanceCraftItems.YEAST).when(LootItemRandomChanceCondition.randomChance(0.0015F)));
                 tableBuilder.withPool(lootPool);
-            }  else if (lootTableSource.isBuiltin() && BEETROOT_LOOT_TABLE.equals(lootTable)) {
+            }  else if (BEETROOT_LOOT_TABLE.isPresent() && lootTableSource.isBuiltin() && BEETROOT_LOOT_TABLE.get().equals(lootTable)) {
                 LootItemCondition.Builder fullyGrownCondition = LootItemBlockStatePropertyCondition.hasBlockStateProperties(Blocks.BEETROOTS).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(PotatoBlock.AGE, 7));
                 LootPool.Builder lootPool = new LootPool.Builder();
                 lootPool.when(fullyGrownCondition)

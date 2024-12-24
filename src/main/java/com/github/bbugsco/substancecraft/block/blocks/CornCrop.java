@@ -5,7 +5,6 @@ import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
@@ -45,11 +44,6 @@ public class CornCrop extends CropBlock {
     @Override
     public @NotNull MapCodec<? extends CropBlock> codec() {
         return CODEC;
-    }
-
-    @Override
-    public @NotNull ItemStack getCloneItemStack(LevelReader level, BlockPos pos, BlockState state) {
-        return new ItemStack(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CORN_CROP));
     }
 
     @Override

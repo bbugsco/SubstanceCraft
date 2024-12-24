@@ -5,6 +5,8 @@ import com.github.bbugsco.substancecraft.entities.hatman.HatMan;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -17,10 +19,13 @@ public class SubstanceCraftEntities {
     public static void registerEntities() {
         FabricDefaultAttributeRegistry.register(HATMAN, HatMan.createMobAttributes());
         SubstanceCraft.LOGGER.info("Registering " + SubstanceCraft.MOD_ID + " Entities");
+
     }
 
     private static <T extends Entity> EntityType<T> register(String key, EntityType.Builder<T> builder) {
-        return Registry.register(BuiltInRegistries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, key), builder.build(key));
+        return Registry.register(BuiltInRegistries.ENTITY_TYPE,
+                ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, key),
+                builder.build(ResourceKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, key))));
     }
 
 

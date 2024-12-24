@@ -24,9 +24,11 @@ import com.github.bbugsco.substancecraft.recipe.builder.RefineryRecipeBuilder;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
-import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -38,429 +40,415 @@ import java.util.concurrent.CompletableFuture;
 
 public class RecipeGenerator extends FabricRecipeProvider {
 
+
     public RecipeGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 
     @Override
-    public void buildRecipes(RecipeOutput exporter) {
-        ShapedRecipeBuilder.shaped(
-                        RecipeCategory.MISC,
-                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HASH_PRESS))
-                .pattern("121")
-                .pattern(" 3 ")
-                .pattern("111")
-                .define('1', Items.SMOOTH_STONE_SLAB)
-                .define('2', Items.REDSTONE_BLOCK)
-                .define('3', Items.PISTON)
-                .unlockedBy("has_item", has(Items.SMOOTH_STONE_SLAB))
-                .unlockedBy("has_item", has(Items.REDSTONE_BLOCK))
-                .unlockedBy("has_item", has(Items.PISTON))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "hash_press"));
+    protected @NotNull RecipeProvider createRecipeProvider(HolderLookup.Provider provider, RecipeOutput recipeOutput) {
+        return new RecipeProvider(provider, recipeOutput) {
+            @Override
+            public void buildRecipes() {
+                shaped(RecipeCategory.MISC, SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HASH_PRESS))
+                        .pattern("121")
+                        .pattern(" 3 ")
+                        .pattern("111")
+                        .define('1', Items.SMOOTH_STONE_SLAB)
+                        .define('2', Items.REDSTONE_BLOCK)
+                        .define('3', Items.PISTON)
+                        .unlockedBy("has_item", has(Items.SMOOTH_STONE_SLAB))
+                        .unlockedBy("has_item", has(Items.REDSTONE_BLOCK))
+                        .unlockedBy("has_item", has(Items.PISTON))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "hash_press")));
 
-        ShapedRecipeBuilder.shaped(
-                        RecipeCategory.MISC,
-                        SubstanceCraftItems.EMPTY_DAB_RIG)
-                .pattern("1  ")
-                .pattern("121")
-                .pattern(" 1 ")
-                .define('1', Items.GLASS)
-                .define('2', Items.GLASS_BOTTLE)
-                .unlockedBy("has_item", has(Items.GLASS))
-                .unlockedBy("has_item", has(Items.GLASS_BOTTLE))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "dab_rig"));
+                shaped(RecipeCategory.MISC, SubstanceCraftItems.EMPTY_DAB_RIG)
+                        .pattern("1  ")
+                        .pattern("121")
+                        .pattern(" 1 ")
+                        .define('1', Items.GLASS)
+                        .define('2', Items.GLASS_BOTTLE)
+                        .unlockedBy("has_item", has(Items.GLASS))
+                        .unlockedBy("has_item", has(Items.GLASS_BOTTLE))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "dab_rig")));
 
-        ShapedRecipeBuilder.shaped(
-                        RecipeCategory.MISC,
-                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.REFINERY))
-                .pattern("333")
-                .pattern("212")
-                .pattern("323")
-                .define('1', Items.CAULDRON)
-                .define('2', Items.IRON_INGOT)
-                .define('3', Items.COPPER_BLOCK)
-                .unlockedBy("has_item", has(Items.IRON_INGOT))
-                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refinery"));
+                shaped(RecipeCategory.MISC, SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.REFINERY))
+                        .pattern("333")
+                        .pattern("212")
+                        .pattern("323")
+                        .define('1', Items.CAULDRON)
+                        .define('2', Items.IRON_INGOT)
+                        .define('3', Items.COPPER_BLOCK)
+                        .unlockedBy("has_item", has(Items.IRON_INGOT))
+                        .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refinery")));
 
-        ShapedRecipeBuilder.shaped(
-                        RecipeCategory.MISC,
-                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MIXER))
-                .pattern("121")
-                .pattern("343")
-                .pattern("131")
-                .define('1', Items.COPPER_BLOCK)
-                .define('2', Items.IRON_SHOVEL)
-                .define('3', Items.IRON_INGOT)
-                .define('4', Items.CAULDRON)
-                .unlockedBy("has_item", has(Items.IRON_INGOT))
-                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mixer"));
+                shaped(RecipeCategory.MISC, SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MIXER))
+                        .pattern("121")
+                        .pattern("343")
+                        .pattern("131")
+                        .define('1', Items.COPPER_BLOCK)
+                        .define('2', Items.IRON_SHOVEL)
+                        .define('3', Items.IRON_INGOT)
+                        .define('4', Items.CAULDRON)
+                        .unlockedBy("has_item", has(Items.IRON_INGOT))
+                        .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mixer")));
 
-        ShapedRecipeBuilder.shaped(
-                        RecipeCategory.MISC,
-                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HEATED_MIXER))
-                .pattern("121")
-                .pattern("343")
-                .pattern("151")
-                .define('1', Items.COPPER_BLOCK)
-                .define('2', Items.IRON_SHOVEL)
-                .define('3', Items.IRON_INGOT)
-                .define('4', Items.CAULDRON)
-                .define('5', Items.LAVA_BUCKET)
-                .unlockedBy("has_item", has(Items.IRON_INGOT))
-                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "heated_mixer"));
+                shaped(RecipeCategory.MISC, SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HEATED_MIXER))
+                        .pattern("121")
+                        .pattern("343")
+                        .pattern("151")
+                        .define('1', Items.COPPER_BLOCK)
+                        .define('2', Items.IRON_SHOVEL)
+                        .define('3', Items.IRON_INGOT)
+                        .define('4', Items.CAULDRON)
+                        .define('5', Items.LAVA_BUCKET)
+                        .unlockedBy("has_item", has(Items.IRON_INGOT))
+                        .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "heated_mixer")));
 
-        ShapedRecipeBuilder.shaped(
-                        RecipeCategory.MISC,
-                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.FERMENTATION_TANK))
-                .pattern("121")
-                .pattern("232")
-                .pattern("121")
-                .define('1', Items.COPPER_BLOCK)
-                .define('2', Items.IRON_INGOT)
-                .define('3', Items.CAULDRON)
-                .unlockedBy("has_item", has(Items.IRON_INGOT))
-                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "fermentation_tank"));
+                shaped(RecipeCategory.MISC, SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.FERMENTATION_TANK))
+                        .pattern("121")
+                        .pattern("232")
+                        .pattern("121")
+                        .define('1', Items.COPPER_BLOCK)
+                        .define('2', Items.IRON_INGOT)
+                        .define('3', Items.CAULDRON)
+                        .unlockedBy("has_item", has(Items.IRON_INGOT))
+                        .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "fermentation_tank")));
 
-        ShapedRecipeBuilder.shaped(
-                        RecipeCategory.MISC,
-                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CATALYTIC_REFORMER))
-                .pattern("333")
-                .pattern("212")
-                .pattern("343")
-                .define('1', Items.CAULDRON)
-                .define('2', Items.IRON_INGOT)
-                .define('3', Items.COPPER_BLOCK)
-                .define('4', Items.LAVA_BUCKET)
-                .unlockedBy("has_item", has(Items.IRON_INGOT))
-                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "catalytic_reformer"));
+                shaped(RecipeCategory.MISC, SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CATALYTIC_REFORMER))
+                        .pattern("333")
+                        .pattern("212")
+                        .pattern("343")
+                        .define('1', Items.CAULDRON)
+                        .define('2', Items.IRON_INGOT)
+                        .define('3', Items.COPPER_BLOCK)
+                        .define('4', Items.LAVA_BUCKET)
+                        .unlockedBy("has_item", has(Items.IRON_INGOT))
+                        .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "catalytic_reformer")));
 
-        ShapedRecipeBuilder.shaped(
-                        RecipeCategory.MISC,
-                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OXIDATION_MACHINE))
-                .pattern("323")
-                .pattern("212")
-                .pattern("323")
-                .define('1', Items.CAULDRON)
-                .define('2', Items.IRON_INGOT)
-                .define('3', Items.COPPER_BLOCK)
-                .unlockedBy("has_item", has(Items.IRON_INGOT))
-                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "oxidizer"));
+                shaped(RecipeCategory.MISC, SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OXIDATION_MACHINE))
+                        .pattern("323")
+                        .pattern("212")
+                        .pattern("323")
+                        .define('1', Items.CAULDRON)
+                        .define('2', Items.IRON_INGOT)
+                        .define('3', Items.COPPER_BLOCK)
+                        .unlockedBy("has_item", has(Items.IRON_INGOT))
+                        .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "oxidizer")));
 
 
-        ShapedRecipeBuilder.shaped(
-                        RecipeCategory.MISC,
-                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.AIR_EXTRACTOR))
-                .pattern("343")
-                .pattern("212")
-                .pattern("323")
-                .define('1', Items.CAULDRON)
-                .define('2', Items.IRON_INGOT)
-                .define('3', Items.COPPER_BLOCK)
-                .define('4', Items.HOPPER)
-                .unlockedBy("has_item", has(Items.IRON_INGOT))
-                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "air_extractor"));
+                shaped(RecipeCategory.MISC, SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.AIR_EXTRACTOR))
+                        .pattern("343")
+                        .pattern("212")
+                        .pattern("323")
+                        .define('1', Items.CAULDRON)
+                        .define('2', Items.IRON_INGOT)
+                        .define('3', Items.COPPER_BLOCK)
+                        .define('4', Items.HOPPER)
+                        .unlockedBy("has_item", has(Items.IRON_INGOT))
+                        .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "air_extractor")));
 
-        ShapedRecipeBuilder.shaped(
-                        RecipeCategory.MISC,
-                        SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE))
-                .pattern("121")
-                .pattern("343")
-                .pattern("151")
-                .define('1', Items.COPPER_BLOCK)
-                .define('2', Items.LEVER)
-                .define('3', Items.REDSTONE)
-                .define('4', Items.CAULDRON)
-                .define('5', Items.IRON_INGOT)
-                .unlockedBy("has_item", has(Items.IRON_INGOT))
-                .unlockedBy("has_item", has(Items.COPPER_BLOCK))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "electrolysis_machine"));
+                shaped(RecipeCategory.MISC, SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE))
+                        .pattern("121")
+                        .pattern("343")
+                        .pattern("151")
+                        .define('1', Items.COPPER_BLOCK)
+                        .define('2', Items.LEVER)
+                        .define('3', Items.REDSTONE)
+                        .define('4', Items.CAULDRON)
+                        .define('5', Items.IRON_INGOT)
+                        .unlockedBy("has_item", has(Items.IRON_INGOT))
+                        .unlockedBy("has_item", has(Items.COPPER_BLOCK))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "electrolysis_machine")));
 
-        HashPressRecipeBuilder.press(
-                        Ingredient.of(SubstanceCraftItems.MARIJUANA),
-                        SubstanceCraftItems.HASH,
-                        1000,
-                        HashPressRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.MARIJUANA))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "press_hash"));
+                HashPressRecipeBuilder.press(
+                                Ingredient.of(SubstanceCraftItems.MARIJUANA),
+                                SubstanceCraftItems.HASH,
+                                1000,
+                                HashPressRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.MARIJUANA))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "press_hash")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OIL_SHALE)),
-                        SubstanceCraftItems.OIL,
-                        List.of(new ItemStack(SubstanceCraftItems.NATURAL_GAS, 40 >> 1)),
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OIL_SHALE)))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_oil"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OIL_SHALE)),
+                                SubstanceCraftItems.OIL,
+                                List.of(new ItemStack(SubstanceCraftItems.NATURAL_GAS, 40 >> 1)),
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OIL_SHALE)))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_oil")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftItems.OIL),
-                        SubstanceCraftItems.PETROLEUM_NAPHTHA,
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.OIL))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_naphtha"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftItems.OIL),
+                                SubstanceCraftItems.PETROLEUM_NAPHTHA,
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.OIL))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_naphtha")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftItems.OIL),
-                        SubstanceCraftItems.KEROSENE,
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.OIL))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_kerosene"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftItems.OIL),
+                                SubstanceCraftItems.KEROSENE,
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.OIL))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_kerosene")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftItems.OIL),
-                        SubstanceCraftItems.GASOLINE,
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.OIL))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_gasoline"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftItems.OIL),
+                                SubstanceCraftItems.GASOLINE,
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.OIL))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_gasoline")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftItems.OIL),
-                        SubstanceCraftItems.DIPHENHYDRAMINE,
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.OIL))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_dph"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftItems.OIL),
+                                SubstanceCraftItems.DIPHENHYDRAMINE,
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.OIL))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_dph")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftItems.OIL),
-                        SubstanceCraftItems.KETAMINE,
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.OIL))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_ketamine"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftItems.OIL),
+                                SubstanceCraftItems.KETAMINE,
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.OIL))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_ketamine")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftItems.NATURAL_GAS),
-                        SubstanceCraftItems.METHANOL,
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.NATURAL_GAS))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_methanol"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftItems.NATURAL_GAS),
+                                SubstanceCraftItems.METHANOL,
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.NATURAL_GAS))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_methanol")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftItems.NATURAL_GAS),
-                        SubstanceCraftItems.ETHANE,
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.NATURAL_GAS))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_ethane"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftItems.NATURAL_GAS),
+                                SubstanceCraftItems.ETHANE,
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.NATURAL_GAS))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_ethane")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftItems.NATURAL_GAS),
-                        SubstanceCraftItems.BUTANE,
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.NATURAL_GAS))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_butane"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftItems.NATURAL_GAS),
+                                SubstanceCraftItems.BUTANE,
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.NATURAL_GAS))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_butane")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftItems.NATURAL_GAS),
-                        SubstanceCraftItems.PROPANE,
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.NATURAL_GAS))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_propane"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftItems.NATURAL_GAS),
+                                SubstanceCraftItems.PROPANE,
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.NATURAL_GAS))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_propane")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftItems.PROPANE),
-                        SubstanceCraftItems.PROPYLENE,
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.PROPANE))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_propylene"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftItems.PROPANE),
+                                SubstanceCraftItems.PROPYLENE,
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.PROPANE))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_propylene")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftItems.ETHANE),
-                        SubstanceCraftItems.ETHYLENE,
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.ETHANE))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_ethylene"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftItems.ETHANE),
+                                SubstanceCraftItems.ETHYLENE,
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.ETHANE))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_ethylene")));
 
-        RefineryRecipeBuilder.refine(
-                        Ingredient.of(SubstanceCraftItems.OIL),
-                        SubstanceCraftItems.DIESEL,
-                        1000,
-                        RefineryRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.ETHANE))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_diesel"));
+                RefineryRecipeBuilder.refine(
+                                Ingredient.of(SubstanceCraftItems.OIL),
+                                SubstanceCraftItems.DIESEL,
+                                1000,
+                                RefineryRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.ETHANE))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "refine_diesel")));
 
-        CatalyticReformerRecipeBuilder.reform(
-                        Ingredient.of(SubstanceCraftItems.PETROLEUM_NAPHTHA),
-                        SubstanceCraftItems.BENZENE,
-                        1000,
-                        CatalyticReformerRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.PETROLEUM_NAPHTHA))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "reform_benzene"));
+                CatalyticReformerRecipeBuilder.reform(
+                                Ingredient.of(SubstanceCraftItems.PETROLEUM_NAPHTHA),
+                                SubstanceCraftItems.BENZENE,
+                                1000,
+                                CatalyticReformerRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.PETROLEUM_NAPHTHA))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "reform_benzene")));
 
-        CatalyticReformerRecipeBuilder.reform(
-                        Ingredient.of(SubstanceCraftItems.PETROLEUM_NAPHTHA),
-                        SubstanceCraftItems.TOLUENE,
-                        1000,
-                        CatalyticReformerRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.PETROLEUM_NAPHTHA))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "reform_toluene"));
+                CatalyticReformerRecipeBuilder.reform(
+                                Ingredient.of(SubstanceCraftItems.PETROLEUM_NAPHTHA),
+                                SubstanceCraftItems.TOLUENE,
+                                1000,
+                                CatalyticReformerRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.PETROLEUM_NAPHTHA))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "reform_toluene")));
 
-        OxidizerRecipeBuilder.oxidize(
-                        Ingredient.of(SubstanceCraftItems.METHANOL),
-                        SubstanceCraftItems.FORMALDEHYDE,
-                        1000,
-                        OxidizerRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.METHANOL))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "oxidize_formaldehyde"));
+                OxidizerRecipeBuilder.oxidize(
+                                Ingredient.of(SubstanceCraftItems.METHANOL),
+                                SubstanceCraftItems.FORMALDEHYDE,
+                                1000,
+                                OxidizerRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.METHANOL))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "oxidize_formaldehyde")));
 
-        ElectrolysisRecipeBuilder.electrolysis(
-                        Ingredient.of(SubstanceCraftItems.BRINE),
-                        SubstanceCraftItems.SODIUM_HYDROXIDE,
-                        List.of(new ItemStack(SubstanceCraftItems.CHLORINE, 30 >> 1), new ItemStack(SubstanceCraftItems.HYDROGEN, 30 >> 1)),
-                        1000,
-                        ElectrolysisRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.BRINE))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "electrolysis_brine"));
+                ElectrolysisRecipeBuilder.electrolysis(
+                                Ingredient.of(SubstanceCraftItems.BRINE),
+                                SubstanceCraftItems.SODIUM_HYDROXIDE,
+                                List.of(new ItemStack(SubstanceCraftItems.CHLORINE, 30 >> 1), new ItemStack(SubstanceCraftItems.HYDROGEN, 30 >> 1)),
+                                1000,
+                                ElectrolysisRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.BRINE))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "electrolysis_brine")));
 
-        ElectrolysisRecipeBuilder.electrolysis(
-                        Ingredient.of(Items.POTION),
-                        SubstanceCraftItems.HYDROGEN,
-                        List.of(new ItemStack(SubstanceCraftItems.OXYGEN, 50 >> 1)),
-                        1000,
-                        ElectrolysisRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.BRINE))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "electrolysis_water"));
+                ElectrolysisRecipeBuilder.electrolysis(
+                                Ingredient.of(Items.POTION),
+                                SubstanceCraftItems.HYDROGEN,
+                                List.of(new ItemStack(SubstanceCraftItems.OXYGEN, 50 >> 1)),
+                                1000,
+                                ElectrolysisRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.BRINE))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "electrolysis_water")));
 
-        AirExtractorRecipeBuilder.extract(
-                        Ingredient.of(Items.GLASS_BOTTLE),
-                        SubstanceCraftItems.NITROGEN,
-                        600,
-                        AirExtractorRecipe::new
-                )
-                .unlockedBy("has_item", has(Items.GLASS_BOTTLE))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "extract_nitrogen"));
+                AirExtractorRecipeBuilder.extract(
+                                Ingredient.of(Items.GLASS_BOTTLE),
+                                SubstanceCraftItems.NITROGEN,
+                                600,
+                                AirExtractorRecipe::new
+                        )
+                        .unlockedBy("has_item", has(Items.GLASS_BOTTLE))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "extract_nitrogen")));
 
-        AirExtractorRecipeBuilder.extract(
-                        Ingredient.of(Items.GLASS_BOTTLE),
-                        SubstanceCraftItems.OXYGEN,
-                        1200,
-                        AirExtractorRecipe::new
-                )
-                .unlockedBy("has_item", has(Items.GLASS_BOTTLE))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "extract_oxygen"));
+                AirExtractorRecipeBuilder.extract(
+                                Ingredient.of(Items.GLASS_BOTTLE),
+                                SubstanceCraftItems.OXYGEN,
+                                1200,
+                                AirExtractorRecipe::new
+                        )
+                        .unlockedBy("has_item", has(Items.GLASS_BOTTLE))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "extract_oxygen")));
 
-        MixerRecipeBuilder.mix(
-                        List.of(Ingredient.of(SubstanceCraftItems.SALT), Ingredient.of(Items.POTION)),
-                        SubstanceCraftItems.BRINE,
-                        800,
-                        MixerRecipe::new
-                )
-                .unlockedBy("has_item", has(Items.POTION))
-                .unlockedBy("has_item", has(SubstanceCraftItems.SALT))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_brine"));
+                MixerRecipeBuilder.mix(
+                                List.of(Ingredient.of(SubstanceCraftItems.SALT), Ingredient.of(Items.POTION)),
+                                SubstanceCraftItems.BRINE,
+                                800,
+                                MixerRecipe::new
+                        )
+                        .unlockedBy("has_item", has(Items.POTION))
+                        .unlockedBy("has_item", has(SubstanceCraftItems.SALT))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_brine")));
 
 
-        HeatedMixerRecipeBuilder.mix(
-                        List.of(Ingredient.of(SubstanceCraftItems.AMMONIA), Ingredient.of(SubstanceCraftItems.METHANOL)),
-                        SubstanceCraftItems.METHYLAMINE,
-                        800,
-                        HeatedMixerRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.AMMONIA))
-                .unlockedBy("has_item", has(SubstanceCraftItems.METHANOL))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_methylamine"));
+                HeatedMixerRecipeBuilder.mix(
+                                List.of(Ingredient.of(SubstanceCraftItems.AMMONIA), Ingredient.of(SubstanceCraftItems.METHANOL)),
+                                SubstanceCraftItems.METHYLAMINE,
+                                800,
+                                HeatedMixerRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.AMMONIA))
+                        .unlockedBy("has_item", has(SubstanceCraftItems.METHANOL))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_methylamine")));
 
-        HeatedMixerRecipeBuilder.mix(
-                        List.of(Ingredient.of(SubstanceCraftItems.CHLORINE), Ingredient.of(SubstanceCraftItems.METHANE)),
-                        SubstanceCraftItems.CHLOROFORM,
-                        800,
-                        HeatedMixerRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.CHLORINE))
-                .unlockedBy("has_item", has(SubstanceCraftItems.METHANE))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_chloroform"));
+                HeatedMixerRecipeBuilder.mix(
+                                List.of(Ingredient.of(SubstanceCraftItems.CHLORINE), Ingredient.of(SubstanceCraftItems.METHANE)),
+                                SubstanceCraftItems.CHLOROFORM,
+                                800,
+                                HeatedMixerRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.CHLORINE))
+                        .unlockedBy("has_item", has(SubstanceCraftItems.METHANE))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_chloroform")));
 
-        HeatedMixerRecipeBuilder.mix(
-                        List.of(Ingredient.of(SubstanceCraftItems.CHLORINE), Ingredient.of(SubstanceCraftItems.HYDROGEN), Ingredient.of(Items.POTION)),
-                        SubstanceCraftItems.HYDROCHLORIC_ACID,
-                        800,
-                        HeatedMixerRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.CHLORINE))
-                .unlockedBy("has_item", has(SubstanceCraftItems.HYDROCHLORIC_ACID))
-                .unlockedBy("has_item", has(Items.POTION))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_hcl"));
+                HeatedMixerRecipeBuilder.mix(
+                                List.of(Ingredient.of(SubstanceCraftItems.CHLORINE), Ingredient.of(SubstanceCraftItems.HYDROGEN), Ingredient.of(Items.POTION)),
+                                SubstanceCraftItems.HYDROCHLORIC_ACID,
+                                800,
+                                HeatedMixerRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.CHLORINE))
+                        .unlockedBy("has_item", has(SubstanceCraftItems.HYDROCHLORIC_ACID))
+                        .unlockedBy("has_item", has(Items.POTION))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_hcl")));
 
-        HeatedMixerRecipeBuilder.mix(
-                        List.of(Ingredient.of(SubstanceCraftItems.NITROGEN), Ingredient.of(SubstanceCraftItems.HYDROGEN)),
-                        SubstanceCraftItems.AMMONIA,
-                        800,
-                        HeatedMixerRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.CHLORINE))
-                .unlockedBy("has_item", has(SubstanceCraftItems.METHANE))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_ammonia"));
+                HeatedMixerRecipeBuilder.mix(
+                                List.of(Ingredient.of(SubstanceCraftItems.NITROGEN), Ingredient.of(SubstanceCraftItems.HYDROGEN)),
+                                SubstanceCraftItems.AMMONIA,
+                                800,
+                                HeatedMixerRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.CHLORINE))
+                        .unlockedBy("has_item", has(SubstanceCraftItems.METHANE))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mix_ammonia")));
 
-        FermentationTankRecipeBuilder.ferment(
-                        List.of(Ingredient.of(SubstanceCraftItems.YEAST), Ingredient.of(SubstanceCraftItems.CORN)),
-                        SubstanceCraftItems.ETHANOL,
-                        2000,
-                        FermentationTankRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.YEAST))
-                .unlockedBy("has_item", has(SubstanceCraftItems.CORN))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "ferment_ethanol"));
+                FermentationTankRecipeBuilder.ferment(
+                                List.of(Ingredient.of(SubstanceCraftItems.YEAST), Ingredient.of(SubstanceCraftItems.CORN)),
+                                SubstanceCraftItems.ETHANOL,
+                                2000,
+                                FermentationTankRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.YEAST))
+                        .unlockedBy("has_item", has(SubstanceCraftItems.CORN))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "ferment_ethanol")));
 
-        FermentationTankRecipeBuilder.ferment(
-                        List.of(Ingredient.of(SubstanceCraftItems.YEAST), Ingredient.of(Items.SUGAR)),
-                        SubstanceCraftItems.YEAST,
-                        2000,
-                        FermentationTankRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.YEAST))
-                .unlockedBy("has_item", has(Items.SUGAR))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "ferment_yeast"));
+                FermentationTankRecipeBuilder.ferment(
+                                List.of(Ingredient.of(SubstanceCraftItems.YEAST), Ingredient.of(Items.SUGAR)),
+                                SubstanceCraftItems.YEAST,
+                                2000,
+                                FermentationTankRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.YEAST))
+                        .unlockedBy("has_item", has(Items.SUGAR))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "ferment_yeast")));
 
-        FermentationTankRecipeBuilder.ferment(
-                        List.of(Ingredient.of(SubstanceCraftItems.ERGOT), Ingredient.of(Items.SUGAR)),
-                        SubstanceCraftItems.ERGOT,
-                        2000,
-                        FermentationTankRecipe::new
-                )
-                .unlockedBy("has_item", has(SubstanceCraftItems.ERGOT))
-                .unlockedBy("has_item", has(Items.SUGAR))
-                .save(exporter, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "ferment_ergot"));
-
+                FermentationTankRecipeBuilder.ferment(
+                                List.of(Ingredient.of(SubstanceCraftItems.ERGOT), Ingredient.of(Items.SUGAR)),
+                                SubstanceCraftItems.ERGOT,
+                                2000,
+                                FermentationTankRecipe::new
+                        )
+                        .unlockedBy("has_item", has(SubstanceCraftItems.ERGOT))
+                        .unlockedBy("has_item", has(Items.SUGAR))
+                        .save(recipeOutput, ResourceKey.create(Registries.RECIPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "ferment_ergot")));
+            }
+        };
     }
 
     @Override
     public @NotNull String getName() {
         return "";
     }
+
 
 }

@@ -11,7 +11,7 @@
   "environment": "*",
   "entrypoints": {
     "fabric-datagen": [
-      "com.github.bbugsco.substancecraft.SubstanceCraft"
+      "com.github.bbugsco.substancecraft.datagen.SubstanceCraftDatagen"
     ],
     "client": [
       "com.github.bbugsco.substancecraft.client.SubstanceCraftClient"

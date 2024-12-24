@@ -3,6 +3,8 @@ package com.github.bbugsco.substancecraft.recipe.generic;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SingleItemRecipe;
@@ -13,6 +15,8 @@ import java.util.List;
 
 public class OneInputRecipe extends SingleItemRecipe {
 
+    private final RecipeType<? extends OneInputRecipe> type;
+    private final RecipeSerializer<? extends OneInputRecipe> serializer;
     private final ItemStack result;
     private final Ingredient ingredient;
     private final List<ItemStack> byproducts;
@@ -23,7 +27,9 @@ public class OneInputRecipe extends SingleItemRecipe {
             RecipeSerializer<? extends OneInputRecipe> serializer,
             String group, Ingredient ingredient, ItemStack result, List<ItemStack> byproducts, int time)
     {
-        super(type, serializer, group, ingredient, result);
+        super(group, ingredient, result);
+        this.type = type;
+        this.serializer = serializer;
         this.ingredient = ingredient;
         this.result = result;
         this.byproducts = byproducts != null ? byproducts : List.of();
@@ -47,6 +53,21 @@ public class OneInputRecipe extends SingleItemRecipe {
 
     public int getTime() {
         return time;
+    }
+
+    @Override
+    public @NotNull RecipeSerializer<? extends OneInputRecipe> getSerializer() {
+        return serializer;
+    }
+
+    @Override
+    public @NotNull RecipeType<? extends OneInputRecipe> getType() {
+        return type;
+    }
+
+    @Override
+    public @NotNull RecipeBookCategory recipeBookCategory() {
+        return RecipeBookCategories.CRAFTING_MISC;
     }
 
     @Override

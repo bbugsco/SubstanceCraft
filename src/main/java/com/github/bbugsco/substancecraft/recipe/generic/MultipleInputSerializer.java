@@ -3,6 +3,7 @@ package com.github.bbugsco.substancecraft.recipe.generic;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -21,7 +22,7 @@ public class MultipleInputSerializer<T extends MultipleInputRecipe> implements R
         this.factory = factory;
         this.codec = RecordCodecBuilder.mapCodec(
                 (instance) -> instance.group(
-                        Ingredient.CODEC_NONEMPTY.listOf().fieldOf("ingredients").forGetter(MultipleInputRecipe::getInputs),
+                        Ingredient.CODEC.listOf().fieldOf("ingredients").forGetter(MultipleInputRecipe::getInputs),
                         ItemStack.STRICT_CODEC.fieldOf("result").forGetter(MultipleInputRecipe::getResult),
                         ItemStack.CODEC.listOf().fieldOf("byproducts").forGetter(MultipleInputRecipe::getByproducts),
                         Codec.INT.fieldOf("time").orElse(200).forGetter(MultipleInputRecipe::getTime)
@@ -40,7 +41,7 @@ public class MultipleInputSerializer<T extends MultipleInputRecipe> implements R
     }
 
     private T read(RegistryFriendlyByteBuf buf) {
-        NonNullList<Ingredient> input =  NonNullList.withSize(buf.readVarInt(), Ingredient.EMPTY);;
+        NonNullList<Ingredient> input =  NonNullList.withSize(buf.readVarInt(), Ingredient.of(HolderSet.empty()));
         input.replaceAll(ingredient -> Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
         ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
         NonNullList<ItemStack> byproducts =  NonNullList.withSize(buf.readVarInt(), ItemStack.EMPTY);

@@ -3,11 +3,15 @@ package com.github.bbugsco.substancecraft.recipe.generic;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.PlacementInfo;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeBookCategories;
+import net.minecraft.world.item.crafting.RecipeBookCategory;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -20,6 +24,9 @@ public class MultipleInputRecipe implements Recipe<MultipleItemInput> {
     protected final ItemStack result;
     protected final List<ItemStack> byproducts;
     protected final int time;
+
+    @Nullable
+    private PlacementInfo placementInfo;
 
     public MultipleInputRecipe
             (RecipeType<? extends MultipleInputRecipe> type,
@@ -81,23 +88,26 @@ public class MultipleInputRecipe implements Recipe<MultipleItemInput> {
     }
 
     @Override
-    public boolean canCraftInDimensions(int width, int height) {
-        return true;
-    }
-
-    @Override
-    public @NotNull ItemStack getResultItem(HolderLookup.Provider registries) {
-        return result;
-    }
-
-    @Override
-    public @NotNull RecipeSerializer<?> getSerializer() {
+    public @NotNull RecipeSerializer<? extends MultipleInputRecipe> getSerializer() {
         return serializer;
     }
 
     @Override
-    public @NotNull RecipeType<?> getType() {
+    public @NotNull RecipeType<? extends MultipleInputRecipe> getType() {
         return type;
+    }
+
+    @Override
+    public @NotNull PlacementInfo placementInfo() {
+        if (this.placementInfo == null) {
+            this.placementInfo = PlacementInfo.create(this.ingredients);
+        }
+        return this.placementInfo;
+    }
+
+    @Override
+    public @NotNull RecipeBookCategory recipeBookCategory() {
+        return RecipeBookCategories.CRAFTING_MISC;
     }
 
     public interface Factory<T extends MultipleInputRecipe> {

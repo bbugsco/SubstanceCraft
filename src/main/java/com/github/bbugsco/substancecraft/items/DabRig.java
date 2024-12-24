@@ -10,7 +10,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,9 +35,8 @@ public class DabRig {
         }
 
         @Override
-        public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand interactionHand) {
-            ItemStack item = player.getItemInHand(interactionHand);
-            if (!(player.getOffhandItem().is(SubstanceCraftItems.HASH))) return InteractionResultHolder.fail(item);
+        public @NotNull InteractionResult use(Level level, Player player, InteractionHand interactionHand) {
+            if (!(player.getOffhandItem().is(SubstanceCraftItems.HASH))) return InteractionResult.FAIL;
             return super.use(level, player, interactionHand);
         }
 
@@ -47,7 +46,7 @@ public class DabRig {
             if (player.getOffhandItem().is(SubstanceCraftItems.HASH)) {
                 ItemStack hash = player.getOffhandItem();
                 hash.setCount(hash.getCount() - 1);
-                player.getCooldowns().addCooldown(this, 20 * 20);
+                player.getCooldowns().addCooldown(itemStack, 20 * 20);
 
                 Vector3f positionVector = new Vector3f((float) player.getX(), (float) player.getY(), (float) player.getZ())
                                 .add(player.getLookAngle().normalize().toVector3f().mul(0.8f))
@@ -116,23 +115,23 @@ public class DabRig {
         }
 
         @Override
-        public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
+        public @NotNull InteractionResult use(Level level, Player player, InteractionHand usedHand) {
             ItemStack itemStack = player.getItemInHand(usedHand);
             BlockHitResult blockHitResult = getPlayerPOVHitResult(level, player, ClipContext.Fluid.SOURCE_ONLY);
             if (blockHitResult.getType() != HitResult.Type.MISS) {
                 if (blockHitResult.getType() == HitResult.Type.BLOCK) {
                     BlockPos blockPos = blockHitResult.getBlockPos();
                     if (!level.mayInteract(player, blockPos)) {
-                        return InteractionResultHolder.pass(itemStack);
+                        return InteractionResult.PASS;
                     }
                     if (level.getFluidState(blockPos).is(FluidTags.WATER)) {
                         level.playSound(player, player.getX(), player.getY(), player.getZ(), SoundEvents.BOTTLE_FILL, SoundSource.NEUTRAL, 1.0F, 1.0F);
                         level.gameEvent(player, GameEvent.FLUID_PICKUP, blockPos);
-                        return InteractionResultHolder.sidedSuccess(this.turnBottleIntoItem(itemStack, player, new ItemStack(SubstanceCraftItems.DAB_RIG)), level.isClientSide());
+                        return InteractionResult.SUCCESS.heldItemTransformedTo(this.turnBottleIntoItem(itemStack, player, new ItemStack(SubstanceCraftItems.DAB_RIG)));
                     }
                 }
             }
-            return InteractionResultHolder.pass(itemStack);
+            return InteractionResult.PASS;
         }
 
         protected ItemStack turnBottleIntoItem(ItemStack bottleStack, Player player, ItemStack filledBottleStack) {

@@ -10,10 +10,9 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.world.entity.LivingEntity;
 
 @Environment(EnvType.CLIENT)
-public class HatManModel<T extends LivingEntity> extends HumanoidModel<T> {
+public class HatManModel extends HumanoidModel<HatmanRenderState> {
 
     public HatManModel(ModelPart root) {
         super(root);
@@ -33,8 +32,9 @@ public class HatManModel<T extends LivingEntity> extends HumanoidModel<T> {
         return LayerDefinition.create(meshDefinition, 64, 32);
     }
 
-    public void setupAnim(T entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        super.setupAnim(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+    @Override
+    public void setupAnim(HatmanRenderState humanoidRenderState) {
+        super.setupAnim(humanoidRenderState);
         this.head.visible = true;
         this.body.xRot = 0.0F;
         this.body.y = -14.0F;
@@ -90,5 +90,7 @@ public class HatManModel<T extends LivingEntity> extends HumanoidModel<T> {
         this.rightArm.setPos(-5.0F, -12.0F, 0.0F);
         this.leftArm.setPos(5.0F, -12.0F, 0.0F);
     }
+
+
 
 }
