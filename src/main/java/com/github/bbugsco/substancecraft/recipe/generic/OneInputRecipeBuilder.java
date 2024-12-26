@@ -7,10 +7,12 @@ import net.minecraft.advancements.Criterion;
 import net.minecraft.advancements.critereon.RecipeUnlockedTrigger;
 import net.minecraft.data.recipes.RecipeBuilder;
 import net.minecraft.data.recipes.RecipeOutput;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -54,19 +56,19 @@ public class OneInputRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public void save(RecipeOutput exporter, ResourceLocation recipeId) {
-        this.validate(recipeId);
-        Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(recipeId)).rewards(AdvancementRewards.Builder.recipe(recipeId)).requirements(AdvancementRequirements.Strategy.OR);
+    public void save(RecipeOutput exporter, ResourceKey<Recipe<?>> resourceKey) {
+        this.validate(resourceKey);
+        Advancement.Builder builder = exporter.advancement().addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(resourceKey)).rewards(AdvancementRewards.Builder.recipe(resourceKey)).requirements(AdvancementRequirements.Strategy.OR);
         Objects.requireNonNull(builder);
         this.criteria.forEach(builder::addCriterion);
         int count = ingredient.test(new ItemStack(result)) ? 2 : 1;
         OneInputRecipe recipeFactory = this.factory.create(this.ingredient, new ItemStack(this.result, count), this.byproducts, this.time);
-        exporter.accept(recipeId, recipeFactory, builder.build(recipeId.withPrefix("recipes/")));
+        exporter.accept(resourceKey, recipeFactory, builder.build(resourceKey.location().withPrefix("recipes/")));
     }
 
-    protected void validate(ResourceLocation recipeId) {
+    protected void validate(ResourceKey<Recipe<?>> resourceKey) {
         if (this.criteria.isEmpty()) {
-            throw new IllegalStateException("No way of obtaining recipe " + recipeId);
+            throw new IllegalStateException("No way of obtaining recipe " + resourceKey);
         }
     }
 

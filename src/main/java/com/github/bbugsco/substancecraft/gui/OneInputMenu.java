@@ -13,6 +13,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
+
 import java.util.List;
 
 @SuppressWarnings("unchecked")
@@ -58,12 +59,8 @@ public class OneInputMenu<R extends OneInputRecipe, T extends OneInputBlockEntit
     @Override
     public boolean clickMenuButton(Player player, int id) {
         if (this.isValidRecipeIndex(id)) {
-            if (handle.selectsRecipe()) {
-                handle.setSelectedRecipeIndex(id);
-                handle.setChanged();
-           } else {
-                return false;
-            }
+            handle.setSelectedRecipeIndex(id);
+            handle.setChanged();
         }
         return true;
     }
@@ -86,10 +83,6 @@ public class OneInputMenu<R extends OneInputRecipe, T extends OneInputBlockEntit
 
     public int getNumRecipes() {
         return getRecipes().size();
-    }
-
-    public boolean selectsRecipe() {
-        return handle.selectsRecipe();
     }
 
     public boolean isCrafting() {
@@ -115,6 +108,10 @@ public class OneInputMenu<R extends OneInputRecipe, T extends OneInputBlockEntit
         for (int i = 0; i < 9; ++i) {
             this.addSlot(new Slot(playerInventory, i, 8 + i * 18, 142));
         }
+    }
+
+    public boolean hasRepeatInputRecipes() {
+        return handle.hasRepeatInputRecipes();
     }
 
     @Override
@@ -144,7 +141,7 @@ public class OneInputMenu<R extends OneInputRecipe, T extends OneInputBlockEntit
     public boolean stillValid(Player player) {
         return this.inventory.stillValid(player);
     }
-    
+
     public static Slot inputSlot(Container container) {
         return new Slot(container, INPUT_SLOT_INDEX, INPUT_SLOT_X, INPUT_SLOT_Y);
     }

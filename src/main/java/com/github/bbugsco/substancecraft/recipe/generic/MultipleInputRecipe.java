@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class MultipleInputRecipe implements Recipe<MultipleItemInput> {
+public class MultipleInputRecipe implements Recipe<MultipleItemInput>, ByproductRecipe {
 
     private final RecipeType<? extends MultipleInputRecipe> type;
     private final RecipeSerializer<? extends MultipleInputRecipe> serializer;
@@ -52,6 +52,7 @@ public class MultipleInputRecipe implements Recipe<MultipleItemInput> {
     }
 
     @NotNull
+    @Override
     public List<ItemStack> getByproducts() {
         return byproducts;
     }

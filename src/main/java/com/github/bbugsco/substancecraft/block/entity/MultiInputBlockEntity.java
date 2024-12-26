@@ -27,21 +27,16 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
     public static final int FIRST_BYPRODUCT_SLOT = 5;
 
     public final RecipeManager.CachedCheck<MultipleItemInput, T> matchGetter;
-    private final boolean selectsRecipe;
     private final RecipeType<T> type;
-    private List<RecipeHolder<T>> recipes;
+    private final List<RecipeHolder<T>> recipes;
+    private final boolean hasRepeatInputRecipes;
 
-    public MultiInputBlockEntity(BlockPos pos, BlockState state, String displayName, RecipeType<T> type, BlockEntityType<?> blockEntityType, boolean selectsRecipe) {
+    public MultiInputBlockEntity(BlockPos pos, BlockState state, String displayName, RecipeType<T> type, BlockEntityType<?> blockEntityType, boolean hasRepeatInputRecipes) {
         super(blockEntityType, pos, state, displayName, 8);
-        this.selectsRecipe = selectsRecipe;
         this.matchGetter = RecipeManager.createCheck(type);
+        this.hasRepeatInputRecipes = hasRepeatInputRecipes;
         this.type = type;
         this.recipes = new ArrayList<>();
-    }
-
-    @Override
-    public boolean selectsRecipe() {
-        return selectsRecipe;
     }
 
     @Override
@@ -64,10 +59,20 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
         return this.recipes;
     }
 
+    @SuppressWarnings("unchecked")
     public void setupRecipeList() {
         if (this.level != null) {
-            this.recipes = this.level.getRecipeManager().getAllRecipesFor(type);
+            this.recipes.clear();
+            ((RecipeManager) this.level.recipeAccess()).getRecipes().forEach(recipeHolder -> {
+                if (recipeHolder.value().getType().equals(type)) {
+                    recipes.add((RecipeHolder<T>) recipeHolder);
+                }
+            });
         }
+    }
+
+    public boolean hasRepeatInputRecipes() {
+        return hasRepeatInputRecipes;
     }
 
     @Override
@@ -88,46 +93,20 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
     }
 
     public Optional<RecipeHolder<T>> getCurrentRecipe() {
-        if (selectsRecipe) {
-            List<RecipeHolder<T>> recipes = getRecipes();
-            if (recipes.isEmpty()) {
-                return Optional.empty();
-            } else {
-                int index = getSelectedRecipeIndex();
-                if (index > -1 && index < recipes.size()) {
-                    return Optional.of(recipes.get(index));
-                } else return Optional.empty();
-            }
+        List<RecipeHolder<T>> recipes = getRecipes();
+        if (recipes.isEmpty()) {
+            return Optional.empty();
         } else {
-            return matchGetter.getRecipeFor(new MultipleItemInput(noAirInputs()), level);
+            int index = getSelectedRecipeIndex();
+            if (index > -1 && index < recipes.size()) {
+                return Optional.of(recipes.get(index));
+            } else return Optional.empty();
         }
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
         if (level.isClientSide) return;
         super.updateState(state, level, pos);
-        if (selectsRecipe) {
-            selectedRecipeTick(level, pos, state);
-        } else {
-            if (isSlotEmptyOrReceivable(OUTPUT_SLOT)) {
-                if (hasRecipe()) {
-                    progress++;
-                    setChanged(level, pos, state);
-                    if (progress >= maxProgress) {
-                        craftItem();
-                        resetProgress();
-                    }
-                } else {
-                    resetProgress();
-                }
-            } else {
-                resetProgress();
-                setChanged(level, pos, state);
-            }
-        }
-    }
-
-    public void selectedRecipeTick(Level level, BlockPos pos, BlockState state) {
         if (isSlotEmptyOrReceivable(OUTPUT_SLOT)) {
             if (hasRecipe()) {
                 T recipe = getRecipes().get(getSelectedRecipeIndex()).value();
@@ -164,42 +143,7 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
         if (canInsertAmountIntoSlot(result, OUTPUT_SLOT)) {
             this.setItem(OUTPUT_SLOT, new ItemStack(result.getItem(), getItem(OUTPUT_SLOT).getCount() + recipe.getResult().getCount()));
         }
-        byproduct(recipe);
-    }
-
-    private void craftItem() {
-        Optional<RecipeHolder<T>> recipe = getCurrentRecipe();
-        for (int i = 0; i < 4; i++) {
-            this.removeItem(FIRST_INPUT_SLOT + i, 1);
-        }
-        recipe.ifPresent(recipeEntry -> this.setItem(OUTPUT_SLOT, new ItemStack(
-                recipeEntry.value().getResult().getItem(),
-                getItem(OUTPUT_SLOT).getCount() + recipeEntry.value().getResult().getCount())));
-        recipe.ifPresent(recipeHolder -> byproduct(recipeHolder.value()));
-    }
-
-    private void byproduct(MultipleInputRecipe recipe) {
-        List<ItemStack> byproducts = recipe.getByproducts();
-        if (byproducts.isEmpty()) { return; }
-        int index = 0;
-        for (ItemStack byproduct : byproducts) {
-            if (getLevel() == null) return;
-            if (getLevel().random.nextInt(100) > byproduct.getCount() << 1) {
-                index++;
-                continue;
-            }
-            int slot = FIRST_BYPRODUCT_SLOT + index;
-            if (!canInsertItemIntoSlot(byproduct.getItem(), slot)) {
-                index++;
-                continue;
-            }
-            if (!canInsertAmountIntoSlot(byproduct, slot)) {
-                index++;
-                continue;
-            }
-            setItem(slot, new ItemStack(byproduct.getItem(), getItem(slot).getCount() + 1));
-            index++;
-        }
+        byproduct(recipe, FIRST_BYPRODUCT_SLOT);
     }
 
     private boolean hasRecipe() {

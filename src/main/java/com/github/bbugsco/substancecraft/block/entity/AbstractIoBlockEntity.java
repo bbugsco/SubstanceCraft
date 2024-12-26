@@ -1,6 +1,9 @@
 package com.github.bbugsco.substancecraft.block.entity;
 
 import com.github.bbugsco.substancecraft.block.blocks.GenericMenuBlock;
+import com.github.bbugsco.substancecraft.recipe.generic.ByproductRecipe;
+import com.github.bbugsco.substancecraft.recipe.generic.MultipleInputRecipe;
+import com.github.bbugsco.substancecraft.recipe.generic.OneInputRecipe;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
@@ -12,12 +15,15 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public abstract class AbstractIoBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
 
@@ -101,6 +107,30 @@ public abstract class AbstractIoBlockEntity extends BlockEntity implements Exten
 
     protected boolean isSlotEmptyOrReceivable(int slot) {
         return this.getItem(slot).isEmpty() || getItem(slot).getCount() < getItem(slot).getMaxStackSize();
+    }
+
+    protected  void byproduct(ByproductRecipe recipe, int firstByproductSlot) {
+        List<ItemStack> byproducts = recipe.getByproducts();
+        if (byproducts.isEmpty()) { return; }
+        int index = 0;
+        for (ItemStack byproduct : byproducts) {
+            if (getLevel() == null) return;
+            if (getLevel().random.nextInt(100) > byproduct.getCount() << 1) {
+                index++;
+                continue;
+            }
+            int slot = firstByproductSlot + index;
+            if (!canInsertItemIntoSlot(byproduct.getItem(), slot)) {
+                index++;
+                continue;
+            }
+            if (!canInsertAmountIntoSlot(byproduct, slot)) {
+                index++;
+                continue;
+            }
+            setItem(slot, new ItemStack(byproduct.getItem(), getItem(slot).getCount() + 1));
+            index++;
+        }
     }
 
     @Override

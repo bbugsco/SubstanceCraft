@@ -2,7 +2,9 @@ package com.github.bbugsco.substancecraft.block.entity;
 
 import com.github.bbugsco.substancecraft.recipe.generic.OneInputRecipe;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeAccess;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -10,6 +12,7 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,14 +24,14 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Abst
     public static final int BYPRODUCT_START_SLOT = 2;
 
     public final RecipeManager.CachedCheck<SingleRecipeInput, T> matchGetter;
-    private final boolean selectsRecipe;
     private final RecipeType<T> type;
-    private List<RecipeHolder<T>> recipes;
+    private final List<RecipeHolder<T>> recipes;
+    private final boolean hasRepeatInputRecipes;
 
-    public OneInputBlockEntity(BlockPos pos, BlockState state, String displayName, RecipeType<T> type, BlockEntityType<?> blockEntityType, boolean selectsRecipe) {
+    public OneInputBlockEntity(BlockPos pos, BlockState state, String displayName, RecipeType<T> type, BlockEntityType<?> blockEntityType, boolean hasRepeatInputRecipes) {
         super(blockEntityType, pos, state, displayName, 5);
-        this.selectsRecipe = selectsRecipe;
         this.matchGetter = RecipeManager.createCheck(type);
+        this.hasRepeatInputRecipes = hasRepeatInputRecipes;
         this.type = type;
         this.recipes = new ArrayList<>();
     }
@@ -53,15 +56,20 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Abst
         return this.recipes;
     }
 
-    @Override
-    public boolean selectsRecipe() {
-        return selectsRecipe;
-    }
-
+    @SuppressWarnings("unchecked")
     public void setupRecipeList() {
         if (this.level != null) {
-            this.recipes = this.level.getRecipeManager().getAllRecipesFor(type);
+            this.recipes.clear();
+            this.level.getServer().getRecipeManager().getRecipes().forEach(recipeHolder -> {
+                if (recipeHolder.value().getType().equals(type)) {
+                    recipes.add((RecipeHolder<T>) recipeHolder);
+                }
+            });
         }
+    }
+
+    public boolean hasRepeatInputRecipes() {
+        return hasRepeatInputRecipes;
     }
 
     public ItemStack getRenderStack() {
@@ -85,46 +93,19 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Abst
     }
 
     public Optional<RecipeHolder<T>> getCurrentRecipe() {
-        if (selectsRecipe) {
-            List<RecipeHolder<T>> recipes = getRecipes();
-            if (recipes.isEmpty()) {
-                return Optional.empty();
-            } else {
-                int index = getSelectedRecipeIndex();
-                if (index > -1 && index < recipes.size()) {
-                    return Optional.of(recipes.get(index));
-                } else return Optional.empty();
-            }
+        List<RecipeHolder<T>> recipes = getRecipes();
+        if (recipes.isEmpty()) {
+            return Optional.empty();
         } else {
-            return matchGetter.getRecipeFor(new SingleRecipeInput(getItem(INPUT_SLOT)), level);
+            int index = getSelectedRecipeIndex();
+            if (index > -1 && index < recipes.size()) {
+                return Optional.of(recipes.get(index));
+            } else return Optional.empty();
         }
     }
 
     public void tick(Level level, BlockPos pos, BlockState state) {
         if(level.isClientSide) return;
-        super.updateState(state, level, pos);
-        if (selectsRecipe) {
-            selectedRecipeTick(level, pos, state);
-        } else {
-            if (isSlotEmptyOrReceivable(OUTPUT_SLOT)) {
-                if (hasRecipe()) {
-                    progress++;
-                    setChanged(level, pos, state);
-                    if (progress >= maxProgress) {
-                        craftItem();
-                        progress = 0;
-                    }
-                } else {
-                    progress = 0;
-                }
-            } else {
-                progress = 0;
-                setChanged(level, pos, state);
-            }
-        }
-    }
-
-    public void selectedRecipeTick(Level level, BlockPos pos, BlockState state) {
         if (isSlotEmptyOrReceivable(OUTPUT_SLOT)) {
             if (hasRecipe()) {
                 T recipe = getRecipes().get(getSelectedRecipeIndex()).value();
@@ -155,41 +136,9 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Abst
         if (canInsertAmountIntoSlot(result, OUTPUT_SLOT)) {
             this.setItem(OUTPUT_SLOT, new ItemStack(result.getItem(), getItem(OUTPUT_SLOT).getCount() + recipe.getResult().getCount()));
         }
-        byproduct(recipe);
+        byproduct(recipe, BYPRODUCT_START_SLOT);
     }
 
-    private void craftItem() {
-        Optional<RecipeHolder<T>> recipe = getCurrentRecipe();
-        this.removeItem(INPUT_SLOT, 1);
-        recipe.ifPresent(inputOutputRecipeRecipeEntry -> this.setItem(OUTPUT_SLOT, new ItemStack(
-                inputOutputRecipeRecipeEntry.value().getResult().getItem(),
-                getItem(OUTPUT_SLOT).getCount() + inputOutputRecipeRecipeEntry.value().getResult().getCount())));
-        recipe.ifPresent(recipeHolder -> byproduct(recipeHolder.value()));
-    }
-
-    private void byproduct(OneInputRecipe recipe) {
-        List<ItemStack> byproducts = recipe.getByproducts();
-        if (byproducts.isEmpty()) { return; }
-        int index = 0;
-        for (ItemStack byproduct : byproducts) {
-            if (getLevel() == null) return;
-            if (getLevel().random.nextInt(100) > byproduct.getCount() << 1) {
-                index++;
-                continue;
-            }
-            int slot = BYPRODUCT_START_SLOT + index;
-            if (!canInsertItemIntoSlot(byproduct.getItem(), slot)) {
-                index++;
-                continue;
-            }
-            if (!canInsertAmountIntoSlot(byproduct, slot)) {
-                index++;
-                continue;
-            }
-            setItem(slot, new ItemStack(byproduct.getItem(), getItem(slot).getCount() + 1));
-            index++;
-        }
-    }
 
     private boolean hasRecipe() {
         Optional<RecipeHolder<T>> recipe = getCurrentRecipe();
@@ -197,8 +146,12 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Abst
     }
 
     private int getCookTime() {
-        SingleRecipeInput input = new SingleRecipeInput(getItem(INPUT_SLOT));
-        return matchGetter.getRecipeFor(input, level).map((recipe) -> recipe.value().getTime()).orElse(200);
+        int cookTime = 200;
+        Optional<RecipeHolder<T>> optionalRecipeHolder = getCurrentRecipe();
+        if (optionalRecipeHolder.isPresent()) {
+            cookTime =  optionalRecipeHolder.get().value().getTime();
+        }
+        return cookTime;
     }
 
 }

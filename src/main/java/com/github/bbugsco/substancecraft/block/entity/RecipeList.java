@@ -9,6 +9,4 @@ public interface RecipeList<T extends Recipe<?>> {
 
     List<RecipeHolder<T>> getRecipes();
 
-    boolean selectsRecipe();
-
 }

@@ -11,19 +11,25 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.resources.sounds.SimpleSoundInstance;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeHolder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Environment(EnvType.CLIENT)
 public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEntity<R>, T extends OneInputMenu<R, E>> extends AbstractContainerScreen<T> {
@@ -65,6 +71,7 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     protected void renderTooltip(GuiGraphics guiGraphics, int x, int y) {
         super.renderTooltip(guiGraphics, x, y);
         int i = this.leftPos + RECIPES_X;
@@ -77,7 +84,7 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
             int o = j + m / RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_HEIGHT + 2;
             if (x >= n && x < n + RECIPES_IMAGE_SIZE_WIDTH && y >= o && y < o + RECIPES_IMAGE_SIZE_HEIGHT) {
                 OneInputRecipe recipe = list.get(l).value();
-                ItemStack inputItem = recipe.getIngredients().getFirst().getItems()[0];
+                ItemStack inputItem = new ItemStack(recipe.getInput().items().findFirst().orElse(Holder.direct(Items.AIR)).value().asItem());
                 ItemStack resultItem = recipe.getResult();
                 List<Component> tooltip = new ArrayList<>();
                 tooltip.add(getItemNameString(resultItem, false));
@@ -103,12 +110,11 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
         setBackgroundTexture(menu.handle.getMaxByproducts());
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        guiGraphics.blit(TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight);
+        guiGraphics.blit(RenderType::guiTextured, TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
         ResourceLocation resourceLocation = this.isScrollBarActive() ? SCROLLER_SPRITE : SCROLLER_DISABLED_SPRITE;
-        guiGraphics.blitSprite(resourceLocation, leftPos + SCROLLER_X, topPos + SCROLLER_Y + (int) (41.0F * this.scrollOffset), SCROLLER_WIDTH, SCROLLER_HEIGHT);
+        guiGraphics.blitSprite(RenderType::guiTextured, resourceLocation, leftPos + SCROLLER_X, topPos + SCROLLER_Y + (int) (41.0F * this.scrollOffset), SCROLLER_WIDTH, SCROLLER_HEIGHT);
         renderProgressArrow(guiGraphics, leftPos, topPos);
         this.renderButtons(guiGraphics, mouseX, mouseY, leftPos + RECIPES_X, topPos + RECIPES_Y, startIndex + (RECIPES_ROWS * RECIPES_COLUMNS));
         this.renderRecipes(guiGraphics, leftPos + RECIPES_X, topPos + RECIPES_Y, startIndex + (RECIPES_ROWS * RECIPES_COLUMNS));
@@ -172,14 +178,14 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
             int row = indexShift / RECIPES_COLUMNS;
             int renderY = y + row * RECIPES_IMAGE_SIZE_HEIGHT + 2;
             ResourceLocation buttonStateTexture;
-            if (menu.selectsRecipe() && index == this.menu.getSelectedRecipeIndex()) {
+            if (menu.hasRepeatInputRecipes() && index == this.menu.getSelectedRecipeIndex()) {
                 buttonStateTexture = RECIPE_SELECTED_SPRITE;
             } else if (mouseX >= renderX && mouseY >= renderY && mouseX < renderX + RECIPES_IMAGE_SIZE_WIDTH && mouseY < renderY + RECIPES_IMAGE_SIZE_HEIGHT) {
                 buttonStateTexture = RECIPE_HIGHLIGHTED_SPRITE;
             } else {
                 buttonStateTexture = RECIPE_SPRITE;
             }
-            guiGraphics.blitSprite(buttonStateTexture, renderX, renderY - 1, RECIPES_IMAGE_SIZE_WIDTH, RECIPES_IMAGE_SIZE_HEIGHT);
+            guiGraphics.blitSprite(RenderType::guiTextured, buttonStateTexture, renderX, renderY - 1, RECIPES_IMAGE_SIZE_WIDTH, RECIPES_IMAGE_SIZE_HEIGHT);
         }
     }
 
@@ -190,13 +196,13 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
             int renderX = x + indexShift % RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_WIDTH;
             int row = indexShift / RECIPES_COLUMNS;
             int renderY = y + row * RECIPES_IMAGE_SIZE_HEIGHT + 2;
-            guiGraphics.renderItem(list.get(index).value().getResultItem(this.minecraft.level.registryAccess()), renderX, renderY);
+            guiGraphics.renderItem(list.get(index).value().getResult(), renderX, renderY);
         }
     }
 
     private void renderProgressArrow(GuiGraphics context, int x, int y) {
         if (menu.isCrafting()) {
-            context.blit(TEXTURE, x + PROGRESS_ARROW_X, y + PROGRESS_ARROW_Y, 176, 0, 8, menu.getScaledProgress());
+            context.blit(RenderType::guiTextured, TEXTURE, x + PROGRESS_ARROW_X, y + PROGRESS_ARROW_Y, 176, 0, 8, menu.getScaledProgress(), 256, 256);
         }
     }
 

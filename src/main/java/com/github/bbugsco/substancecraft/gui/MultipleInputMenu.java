@@ -61,12 +61,8 @@ public class MultipleInputMenu<R extends MultipleInputRecipe, T extends MultiInp
     @Override
     public boolean clickMenuButton(Player player, int id) {
         if (this.isValidRecipeIndex(id)) {
-            if (handle.selectsRecipe()) {
                 handle.setSelectedRecipeIndex(id);
                 handle.setChanged();
-           } else {
-                return false;
-            }
         }
         return true;
     }
@@ -83,16 +79,16 @@ public class MultipleInputMenu<R extends MultipleInputRecipe, T extends MultiInp
         }
     }
 
+    public boolean hasRepeatInputRecipes() {
+        return handle.hasRepeatInputRecipes();
+    }
+
     public List<RecipeHolder<R>> getRecipes() {
         return handle.getRecipes();
     }
 
     public int getNumRecipes() {
         return getRecipes().size();
-    }
-
-    public boolean selectsRecipe() {
-        return handle.selectsRecipe();
     }
 
     public boolean isCrafting() {
