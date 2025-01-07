@@ -1,5 +1,6 @@
 package com.github.bbugsco.substancecraft.block.entity;
 
+import com.github.bbugsco.substancecraft.recipe.SubstanceCraftRecipes;
 import com.github.bbugsco.substancecraft.recipe.generic.OneInputRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -60,11 +61,9 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Abst
     public void setupRecipeList() {
         if (this.level != null) {
             this.recipes.clear();
-            this.level.getServer().getRecipeManager().getRecipes().forEach(recipeHolder -> {
-                if (recipeHolder.value().getType().equals(type)) {
-                    recipes.add((RecipeHolder<T>) recipeHolder);
-                }
-            });
+            for (RecipeHolder<?> recipeHolder : SubstanceCraftRecipes.getAllRecipesFor(type)) {
+                recipes.add((RecipeHolder<T>) recipeHolder);
+            }
         }
     }
 

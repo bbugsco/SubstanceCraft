@@ -9,20 +9,20 @@ import net.minecraft.world.item.crafting.RecipeType;
 
 import java.util.List;
 
-public class AirExtractorRecipe extends OneInputRecipe {
+public class ExtractorRecipe extends OneInputRecipe {
 
-    public static final String ID = "air_extractor";
+    public static final String ID = "extractor";
 
-    public AirExtractorRecipe(Ingredient ingredient, ItemStack result, List<ItemStack> byproducts, int time) {
+    public ExtractorRecipe(Ingredient ingredient, ItemStack result, List<ItemStack> byproducts, int time) {
         super(Type.INSTANCE, Serializer.INSTANCE, ID, ingredient, result, byproducts, time);
     }
 
-    public static class Type implements RecipeType<AirExtractorRecipe> {
-        public static final AirExtractorRecipe.Type INSTANCE = new AirExtractorRecipe.Type();
+    public static class Type implements RecipeType<ExtractorRecipe> {
+        public static final ExtractorRecipe.Type INSTANCE = new ExtractorRecipe.Type();
     }
 
     public static class Serializer {
-        public static final RecipeSerializer<AirExtractorRecipe> INSTANCE = new OneInputRecipeSerializer<>(AirExtractorRecipe::new);
+        public static final RecipeSerializer<ExtractorRecipe> INSTANCE = new OneInputRecipeSerializer<>(ExtractorRecipe::new);
     }
 
 }

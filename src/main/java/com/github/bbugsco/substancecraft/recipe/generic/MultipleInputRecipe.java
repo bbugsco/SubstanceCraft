@@ -28,10 +28,7 @@ public class MultipleInputRecipe implements Recipe<MultipleItemInput>, Byproduct
     @Nullable
     private PlacementInfo placementInfo;
 
-    public MultipleInputRecipe
-            (RecipeType<? extends MultipleInputRecipe> type,
-             RecipeSerializer<? extends MultipleInputRecipe> serializer,
-             List<Ingredient> ingredients, ItemStack result, List<ItemStack> byproducts, int time)
+    public MultipleInputRecipe(RecipeType<? extends MultipleInputRecipe> type, RecipeSerializer<? extends MultipleInputRecipe> serializer, List<Ingredient> ingredients, ItemStack result, List<ItemStack> byproducts, int time)
     {
         this.type = type;
         this.serializer = serializer;
@@ -60,6 +57,7 @@ public class MultipleInputRecipe implements Recipe<MultipleItemInput>, Byproduct
     public int getTime() {
         return time;
     }
+
     public int time() {
         return time;
     }

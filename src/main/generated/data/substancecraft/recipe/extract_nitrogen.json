@@ -1,5 +1,5 @@
 {
-  "type": "substancecraft:air_extractor",
+  "type": "substancecraft:extractor",
   "byproducts": [],
   "ingredient": "minecraft:glass_bottle",
   "result": {

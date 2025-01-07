@@ -1,7 +1,7 @@
 package com.github.bbugsco.substancecraft.gui;
 
 import com.github.bbugsco.substancecraft.SubstanceCraft;
-import com.github.bbugsco.substancecraft.gui.menus.AirExtractorMenu;
+import com.github.bbugsco.substancecraft.gui.menus.ExtractorMenu;
 import com.github.bbugsco.substancecraft.gui.menus.CatalyticReformerMenu;
 import com.github.bbugsco.substancecraft.gui.menus.ElectrolysisMachineMenu;
 import com.github.bbugsco.substancecraft.gui.menus.FermentationTankMenu;
@@ -49,10 +49,10 @@ public class SubstanceCraftMenus {
             new ExtendedScreenHandlerType<>(ElectrolysisMachineMenu::new, BlockPos.STREAM_CODEC.cast())
     );
 
-    public static final MenuType<AirExtractorMenu> AIR_EXTRACTOR = Registry.register(
+    public static final MenuType<ExtractorMenu> EXTRACTOR = Registry.register(
             BuiltInRegistries.MENU,
-            ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "air_extractor"),
-            new ExtendedScreenHandlerType<>(AirExtractorMenu::new, BlockPos.STREAM_CODEC.cast())
+            ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "extractor"),
+            new ExtendedScreenHandlerType<>(ExtractorMenu::new, BlockPos.STREAM_CODEC.cast())
     );
 
     public static final MenuType<MixerMenu> MIXER = Registry.register(

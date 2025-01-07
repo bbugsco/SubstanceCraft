@@ -1,10 +1,10 @@
 {
   "type": "substancecraft:extractor",
   "byproducts": [],
-  "ingredient": "minecraft:glass_bottle",
+  "ingredient": "substancecraft:brine",
   "result": {
     "count": 1,
-    "id": "substancecraft:oxygen"
+    "id": "substancecraft:bromide"
   },
   "time": 1200
 }

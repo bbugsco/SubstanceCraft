@@ -10,7 +10,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -60,6 +59,20 @@ public class SubstanceCraftItems {
     public static final Item YEAST = registerItem("yeast", Item::new, new Item.Properties());
     public static final Item HYDROCHLORIC_ACID = registerItem("hydrochloric_acid", Item::new, new Item.Properties());
     public static final Item ERGOT = registerItem("ergot", Item::new, new Item.Properties());
+    public static final Item BENZALDEHYDE = registerItem("benzaldehyde", Item::new, new Item.Properties());
+    public static final Item NITRIC_ACID = registerItem("nitric_acid", Item::new, new Item.Properties());
+    public static final Item NITROMETHANE = registerItem("nitromethane", Item::new, new Item.Properties());
+    public static final Item ACETIC_ACID = registerItem("acetic_acid", Item::new, new Item.Properties());
+    public static final Item AMMONIUM_ACETATE = registerItem("ammonium_acetate", Item::new, new Item.Properties());
+    public static final Item CARBON_MONOXIDE = registerItem("carbon_monoxide", Item::new, new Item.Properties());
+    public static final Item COKE = registerItem("coke", Item::new, new Item.Properties());
+    public static final Item BETA_NITROSTYRENE = registerItem("beta_nitrostyrene", Item::new, new Item.Properties());
+    public static final Item MALEIC_ANHYDRIDE = registerItem("maleic_anhydride", Item::new, new Item.Properties());
+    public static final Item TETRAHYDROFURAN = registerItem("tetrahydrofuran", Item::new, new Item.Properties());
+    public static final Item TWO_C_H = registerItem("2c_h", Item::new, new Item.Properties());
+    public static final Item BROMINE = registerItem("bromine", Item::new, new Item.Properties());
+    public static final Item BROMIDE = registerItem("bromide", Item::new, new Item.Properties());
+    public static final Item TWO_C_B = registerItem("2c_b", Item::new, new Item.Properties());
 
     public static Item registerItem(String name, Function<Item.Properties, Item> factory, Item.Properties properties) {
         ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, name));
@@ -68,10 +81,10 @@ public class SubstanceCraftItems {
     }
 
     public static void registerModItems() {
-        SubstanceCraft.LOGGER.info("Registering Mod Items for " + SubstanceCraft.MOD_ID);
+        registerItemGroups();
     }
 
-    public static void registerItemGroups() {
+    private static void registerItemGroups() {
         SUBSTANCES_ITEM_GROUP = Registry.register(BuiltInRegistries.CREATIVE_MODE_TAB,
                 ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "substances"),
                 FabricItemGroup.builder().title(Component.translatable("itemgroup.substancecraft.substances"))
@@ -91,7 +104,7 @@ public class SubstanceCraftItems {
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CATALYTIC_REFORMER));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OXIDATION_MACHINE));
-                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.AIR_EXTRACTOR));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.EXTRACTOR));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MIXER));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HEATED_MIXER));
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.FERMENTATION_TANK));
@@ -99,8 +112,11 @@ public class SubstanceCraftItems {
                             entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.SALT));
                             entries.accept(SubstanceCraftItems.DIPHENHYDRAMINE);
                             entries.accept(SubstanceCraftItems.KETAMINE);
+                            entries.accept(SubstanceCraftItems.TWO_C_H);
+                            entries.accept(SubstanceCraftItems.TWO_C_B);
                             entries.accept(SubstanceCraftItems.SALT);
                             entries.accept(SubstanceCraftItems.SODIUM_HYDROXIDE);
+                            entries.accept(SubstanceCraftItems.COKE);
                             entries.accept(SubstanceCraftItems.OIL);
                             entries.accept(SubstanceCraftItems.PETROLEUM_NAPHTHA);
                             entries.accept(SubstanceCraftItems.KEROSENE);
@@ -127,6 +143,17 @@ public class SubstanceCraftItems {
                             entries.accept(SubstanceCraftItems.ETHANOL);
                             entries.accept(SubstanceCraftItems.AMMONIA);
                             entries.accept(SubstanceCraftItems.HYDROCHLORIC_ACID);
+                            entries.accept(SubstanceCraftItems.BENZALDEHYDE);
+                            entries.accept(SubstanceCraftItems.NITRIC_ACID);
+                            entries.accept(SubstanceCraftItems.NITROMETHANE);
+                            entries.accept(SubstanceCraftItems.ACETIC_ACID);
+                            entries.accept(SubstanceCraftItems.AMMONIUM_ACETATE);
+                            entries.accept(SubstanceCraftItems.CARBON_MONOXIDE);
+                            entries.accept(SubstanceCraftItems.BETA_NITROSTYRENE);
+                            entries.accept(SubstanceCraftItems.MALEIC_ANHYDRIDE);
+                            entries.accept(SubstanceCraftItems.TETRAHYDROFURAN);
+                            entries.accept(SubstanceCraftItems.BROMINE);
+                            entries.accept(SubstanceCraftItems.BROMIDE);
                         }).build());
 
     }

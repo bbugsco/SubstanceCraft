@@ -59,7 +59,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "minecraft:glowstone_dust"
+              "name": "substancecraft:salt"
             }
           ]
         }

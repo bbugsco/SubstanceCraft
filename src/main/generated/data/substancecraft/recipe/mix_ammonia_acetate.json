@@ -1,0 +1,13 @@
+{
+  "type": "substancecraft:mixer",
+  "byproducts": [],
+  "ingredients": [
+    "substancecraft:acetic_acid",
+    "substancecraft:ammonia"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:ammonium_acetate"
+  },
+  "time": 800
+}

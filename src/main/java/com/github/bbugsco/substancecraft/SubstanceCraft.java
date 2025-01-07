@@ -22,7 +22,6 @@ public class SubstanceCraft implements ModInitializer {
         SubstanceCraftBlocks.registerBlocks();
         SubstanceCraftBlockEntities.registerBlockEntities();
         SubstanceCraftItems.registerModItems();
-        SubstanceCraftItems.registerItemGroups();
         SubstanceCraftMenus.registerMenus();
         SubstanceCraftRecipes.registerRecipes();
         SubstanceCraftFeatures.registerFeatures();

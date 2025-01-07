@@ -20,7 +20,7 @@
               "source": "block_entity"
             }
           ],
-          "name": "substancecraft:air_extractor"
+          "name": "substancecraft:extractor"
         }
       ],
       "rolls": 1.0

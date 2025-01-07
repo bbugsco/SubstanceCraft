@@ -1,7 +1,7 @@
 package com.github.bbugsco.substancecraft.client.gui;
 
 import com.github.bbugsco.substancecraft.SubstanceCraft;
-import com.github.bbugsco.substancecraft.client.gui.screens.AirExtractorScreen;
+import com.github.bbugsco.substancecraft.client.gui.screens.ExtractorScreen;
 import com.github.bbugsco.substancecraft.client.gui.screens.CatalyticReformerScreen;
 import com.github.bbugsco.substancecraft.client.gui.screens.ElectrolysisMachineScreen;
 import com.github.bbugsco.substancecraft.client.gui.screens.FermentationTankScreen;
@@ -24,7 +24,7 @@ public class SubstanceCraftScreens {
         MenuScreens.register(SubstanceCraftMenus.OXIDIZER, OxidizerScreen::new);
         MenuScreens.register(SubstanceCraftMenus.ELECTROLYSIS_MACHINE, ElectrolysisMachineScreen::new);
         MenuScreens.register(SubstanceCraftMenus.CATALYTIC_REFORMER, CatalyticReformerScreen::new);
-        MenuScreens.register(SubstanceCraftMenus.AIR_EXTRACTOR, AirExtractorScreen::new);
+        MenuScreens.register(SubstanceCraftMenus.EXTRACTOR, ExtractorScreen::new);
         MenuScreens.register(SubstanceCraftMenus.MIXER, MixerScreen::new);
         MenuScreens.register(SubstanceCraftMenus.HEATED_MIXER, HeatedMixerScreen::new);
         MenuScreens.register(SubstanceCraftMenus.FERMENTATION_TANK, FermentationTankScreen::new);

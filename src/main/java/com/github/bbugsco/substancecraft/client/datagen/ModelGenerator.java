@@ -36,7 +36,7 @@ public class ModelGenerator extends FabricModelProvider {
         this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE, blockStateModelGenerator);
         this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.OXIDATION_MACHINE, blockStateModelGenerator);
         this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.CATALYTIC_REFORMER, blockStateModelGenerator);
-        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.AIR_EXTRACTOR, blockStateModelGenerator);
+        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.EXTRACTOR, blockStateModelGenerator);
         blockStateModelGenerator.createTrivialCube(SubstanceCraftBlocks.SALT);
         this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.MIXER, blockStateModelGenerator);
         this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.HEATED_MIXER, blockStateModelGenerator);

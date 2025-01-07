@@ -2,7 +2,7 @@ package com.github.bbugsco.substancecraft.block.entity;
 
 import com.github.bbugsco.substancecraft.SubstanceCraft;
 import com.github.bbugsco.substancecraft.block.SubstanceCraftBlocks;
-import com.github.bbugsco.substancecraft.block.entity.entities.AirExtractorBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.entities.ExtractorBlockEntity;
 import com.github.bbugsco.substancecraft.block.entity.entities.CatalyticReformerBlockEntity;
 import com.github.bbugsco.substancecraft.block.entity.entities.ElectrolysisMachineBlockEntity;
 import com.github.bbugsco.substancecraft.block.entity.entities.FermentationTankBlockEntity;
@@ -39,9 +39,9 @@ public class SubstanceCraftBlockEntities {
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "catalytic_reformer"),
                     FabricBlockEntityTypeBuilder.create(CatalyticReformerBlockEntity::new, SubstanceCraftBlocks.CATALYTIC_REFORMER).build());
 
-    public static final BlockEntityType<AirExtractorBlockEntity> AIR_EXTRACTOR =
-            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "air_extractor"),
-                    FabricBlockEntityTypeBuilder.create(AirExtractorBlockEntity::new, SubstanceCraftBlocks.AIR_EXTRACTOR).build());
+    public static final BlockEntityType<ExtractorBlockEntity> EXTRACTOR =
+            Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "extractor"),
+                    FabricBlockEntityTypeBuilder.create(ExtractorBlockEntity::new, SubstanceCraftBlocks.EXTRACTOR).build());
 
     public static final BlockEntityType<MixerBlockEntity> MIXER =
             Registry.register(BuiltInRegistries.BLOCK_ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "mixer"),

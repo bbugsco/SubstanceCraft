@@ -1,5 +1,6 @@
 package com.github.bbugsco.substancecraft.block.entity;
 
+import com.github.bbugsco.substancecraft.recipe.SubstanceCraftRecipes;
 import com.github.bbugsco.substancecraft.recipe.generic.MultipleInputRecipe;
 import com.github.bbugsco.substancecraft.recipe.generic.MultipleItemInput;
 import net.minecraft.core.BlockPos;
@@ -8,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -63,11 +65,9 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
     public void setupRecipeList() {
         if (this.level != null) {
             this.recipes.clear();
-            ((RecipeManager) this.level.recipeAccess()).getRecipes().forEach(recipeHolder -> {
-                if (recipeHolder.value().getType().equals(type)) {
-                    recipes.add((RecipeHolder<T>) recipeHolder);
-                }
-            });
+            for (RecipeHolder<?> recipeHolder : SubstanceCraftRecipes.getAllRecipesFor(type)) {
+                recipes.add((RecipeHolder<T>) recipeHolder);
+            }
         }
     }
 

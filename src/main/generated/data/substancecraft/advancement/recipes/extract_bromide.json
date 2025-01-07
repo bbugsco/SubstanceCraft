@@ -5,7 +5,7 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:copper_block"
+            "items": "substancecraft:brine"
           }
         ]
       },
@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "substancecraft:air_extractor"
+        "recipe": "substancecraft:extract_bromide"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "substancecraft:air_extractor"
+      "substancecraft:extract_bromide"
     ]
   }
 }

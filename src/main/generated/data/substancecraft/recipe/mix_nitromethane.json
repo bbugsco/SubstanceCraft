@@ -1,0 +1,13 @@
+{
+  "type": "substancecraft:heated_mixer",
+  "byproducts": [],
+  "ingredients": [
+    "substancecraft:propane",
+    "substancecraft:nitric_acid"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:nitromethane"
+  },
+  "time": 800
+}

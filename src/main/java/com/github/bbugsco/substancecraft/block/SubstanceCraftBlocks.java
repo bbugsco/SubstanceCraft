@@ -1,7 +1,7 @@
 package com.github.bbugsco.substancecraft.block;
 
 import com.github.bbugsco.substancecraft.SubstanceCraft;
-import com.github.bbugsco.substancecraft.block.blocks.AirExtractor;
+import com.github.bbugsco.substancecraft.block.blocks.Extractor;
 import com.github.bbugsco.substancecraft.block.blocks.CatalyticReformer;
 import com.github.bbugsco.substancecraft.block.blocks.CornCrop;
 import com.github.bbugsco.substancecraft.block.blocks.ElectrolysisMachine;
@@ -40,7 +40,7 @@ public class SubstanceCraftBlocks {
     public static final Block ELECTROLYSIS_MACHINE = registerBlock("electrolysis", ElectrolysisMachine::new, BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE));
     public static final Block OXIDATION_MACHINE = registerBlock("oxidation_machine", Oxidizer::new, BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE));
     public static final Block CATALYTIC_REFORMER = registerBlock("catalytic_reformer", CatalyticReformer::new, BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE));
-    public static final Block AIR_EXTRACTOR = registerBlock("air_extractor", AirExtractor::new, BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE));
+    public static final Block EXTRACTOR = registerBlock("extractor", Extractor::new, BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE));
     public static final Block SALT = registerBlock("salt_block", Block::new, BlockBehaviour.Properties.of().strength(2.0F).sound(SoundType.CALCITE));
     public static final Block MIXER = registerBlock("mixer", Mixer::new, BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE));
     public static final Block HEATED_MIXER = registerBlock("heated_mixer", HeatedMixer::new, BlockBehaviour.Properties.of().strength(3.5F).sound(SoundType.STONE));
