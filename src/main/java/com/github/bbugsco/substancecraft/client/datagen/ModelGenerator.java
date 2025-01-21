@@ -31,16 +31,16 @@ public class ModelGenerator extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         blockStateModelGenerator.createCrossBlock(SubstanceCraftBlocks.MARIJUANA_PLANT, BlockModelGenerators.PlantType.TINTED, MarijuanaPlant.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
-        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.REFINERY, blockStateModelGenerator);
+        createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.REFINERY, blockStateModelGenerator);
         blockStateModelGenerator.createTrivialCube(SubstanceCraftBlocks.OIL_SHALE);
-        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE, blockStateModelGenerator);
-        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.OXIDATION_MACHINE, blockStateModelGenerator);
-        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.CATALYTIC_REFORMER, blockStateModelGenerator);
-        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.EXTRACTOR, blockStateModelGenerator);
+        createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE, blockStateModelGenerator);
+        createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.OXIDATION_MACHINE, blockStateModelGenerator);
+        createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.CATALYTIC_REFORMER, blockStateModelGenerator);
+        createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.EXTRACTOR, blockStateModelGenerator);
         blockStateModelGenerator.createTrivialCube(SubstanceCraftBlocks.SALT);
-        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.MIXER, blockStateModelGenerator);
-        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.HEATED_MIXER, blockStateModelGenerator);
-        this.createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.FERMENTATION_TANK, blockStateModelGenerator);
+        createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.MIXER, blockStateModelGenerator);
+        createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.HEATED_MIXER, blockStateModelGenerator);
+        createTopBottomSideFrontAndFrontOnTexture(SubstanceCraftBlocks.FERMENTATION_TANK, blockStateModelGenerator);
         blockStateModelGenerator.createCrossBlock(SubstanceCraftBlocks.CORN_CROP, BlockModelGenerators.PlantType.TINTED, CornCrop.AGE, 0, 1, 2, 3, 4, 5, 6, 7);
     }
 
@@ -84,6 +84,10 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.generateFlatItem(SubstanceCraftItems.YEAST, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(SubstanceCraftItems.HYDROCHLORIC_ACID, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(SubstanceCraftItems.ERGOT, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.TWO_C_B, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.TWO_C_H, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.BROMINE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.BROMIDE, ModelTemplates.FLAT_ITEM);
     }
 
     private void createTopBottomSideFrontAndFrontOnTexture(Block block, BlockModelGenerators blockModelGenerators) {
@@ -93,9 +97,9 @@ public class ModelGenerator extends FabricModelProvider {
                 .updateTextures(textureMapping -> textureMapping.put(TextureSlot.FRONT, textureOn))
                 .createWithSuffix(block, "_on", blockModelGenerators.modelOutput);
         blockModelGenerators.blockStateOutput.accept(
-                        MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, texture)) .
-                                with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.LIT, anotherOnTexture, texture)).
-                                with(BlockModelGenerators.createHorizontalFacingDispatch()));
+                MultiVariantGenerator.multiVariant(block, Variant.variant().with(VariantProperties.MODEL, texture)).
+                        with(BlockModelGenerators.createBooleanModelDispatch(BlockStateProperties.LIT, anotherOnTexture, texture)).
+                        with(BlockModelGenerators.createHorizontalFacingDispatch()));
 
     }
 

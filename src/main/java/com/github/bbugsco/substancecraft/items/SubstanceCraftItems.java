@@ -89,8 +89,8 @@ public class SubstanceCraftItems {
                 ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "substances"),
                 FabricItemGroup.builder().title(Component.translatable("itemgroup.substancecraft.substances"))
                         .icon(() -> new ItemStack(Items.OMINOUS_BOTTLE)).displayItems((displayContext, entries) -> {
-                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MARIJUANA_PLANT));
                             entries.accept(SubstanceCraftItems.MARIJUANA);
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MARIJUANA_PLANT));
                             entries.accept(SubstanceCraftItems.MARIJUANA_TRIM);
                             entries.accept(SubstanceCraftItems.HASH);
                             entries.accept(SubstanceCraftItems.EMPTY_DAB_RIG);
