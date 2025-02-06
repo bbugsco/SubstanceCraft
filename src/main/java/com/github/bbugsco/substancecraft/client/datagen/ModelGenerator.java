@@ -88,6 +88,16 @@ public class ModelGenerator extends FabricModelProvider {
         itemModelGenerator.generateFlatItem(SubstanceCraftItems.TWO_C_H, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(SubstanceCraftItems.BROMINE, ModelTemplates.FLAT_ITEM);
         itemModelGenerator.generateFlatItem(SubstanceCraftItems.BROMIDE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.COKE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.BENZALDEHYDE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.NITRIC_ACID, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.NITROMETHANE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.ACETIC_ACID, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.AMMONIUM_ACETATE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.CARBON_MONOXIDE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.BETA_NITROSTYRENE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.MALEIC_ANHYDRIDE, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(SubstanceCraftItems.TETRAHYDROFURAN, ModelTemplates.FLAT_ITEM);
     }
 
     private void createTopBottomSideFrontAndFrontOnTexture(Block block, BlockModelGenerators blockModelGenerators) {
