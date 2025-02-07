@@ -16,10 +16,10 @@ public record ModdedRecipesPayload(List<RecipeHolder<?>> recipes) implements Cus
     public static final StreamCodec<RegistryFriendlyByteBuf, ModdedRecipesPayload> CODEC = CustomPacketPayload.codec(ModdedRecipesPayload::write, ModdedRecipesPayload::new);
 
     public ModdedRecipesPayload(RegistryFriendlyByteBuf registryFriendlyByteBuf) {
-        this(readFromBuffer(registryFriendlyByteBuf));
+        this(read(registryFriendlyByteBuf));
     }
 
-    private static List<RecipeHolder<?>> readFromBuffer(RegistryFriendlyByteBuf registryFriendlyByteBuf) {
+    private static List<RecipeHolder<?>> read(RegistryFriendlyByteBuf registryFriendlyByteBuf) {
         List<RecipeHolder<?>> recipes = new ArrayList<>();
         for (int i = 0; i < registryFriendlyByteBuf.readVarInt(); i++) {
             recipes.add(RecipeHolder.STREAM_CODEC.decode(registryFriendlyByteBuf));
