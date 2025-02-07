@@ -61,7 +61,8 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Abst
     public void setupRecipeList() {
         if (this.level != null) {
             this.recipes.clear();
-            for (RecipeHolder<?> recipeHolder : SubstanceCraftRecipes.getAllRecipesFor(type)) {
+            List<RecipeHolder<?>> allRecipes = SubstanceCraftRecipes.getAllRecipesFor(type, level.isClientSide);
+            for (RecipeHolder<?> recipeHolder : allRecipes) {
                 recipes.add((RecipeHolder<T>) recipeHolder);
             }
         }

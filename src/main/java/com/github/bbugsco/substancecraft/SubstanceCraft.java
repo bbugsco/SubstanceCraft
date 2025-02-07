@@ -5,6 +5,7 @@ import com.github.bbugsco.substancecraft.block.entity.SubstanceCraftBlockEntitie
 import com.github.bbugsco.substancecraft.entities.SubstanceCraftEntities;
 import com.github.bbugsco.substancecraft.gui.SubstanceCraftMenus;
 import com.github.bbugsco.substancecraft.items.SubstanceCraftItems;
+import com.github.bbugsco.substancecraft.network.SubstanceCraftNetworking;
 import com.github.bbugsco.substancecraft.recipe.SubstanceCraftRecipes;
 import com.github.bbugsco.substancecraft.world.SubstanceCraftFeatures;
 import com.github.bbugsco.substancecraft.world.SubstanceCraftLootTables;
@@ -27,6 +28,7 @@ public class SubstanceCraft implements ModInitializer {
         SubstanceCraftFeatures.registerFeatures();
         SubstanceCraftLootTables.registerLootTables();
         SubstanceCraftEntities.registerEntities();
+        SubstanceCraftNetworking.init();
     }
 
 

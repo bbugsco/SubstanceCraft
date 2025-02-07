@@ -6,6 +6,7 @@ import com.github.bbugsco.substancecraft.client.block.entity.renderer.HashPressB
 import com.github.bbugsco.substancecraft.client.datagen.ModelGenerator;
 import com.github.bbugsco.substancecraft.client.entity.SubstanceCraftEntityRenderers;
 import com.github.bbugsco.substancecraft.client.gui.SubstanceCraftScreens;
+import com.github.bbugsco.substancecraft.client.network.SubstanceCraftClientNetworking;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -26,6 +27,7 @@ public class SubstanceCraftClient implements ClientModInitializer, DataGenerator
 
         SubstanceCraftScreens.registerScreens();
         SubstanceCraftEntityRenderers.registerEntityRenderers();
+        SubstanceCraftClientNetworking.init();
     }
 
     @Override

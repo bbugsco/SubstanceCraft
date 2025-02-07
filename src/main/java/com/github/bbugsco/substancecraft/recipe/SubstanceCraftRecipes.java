@@ -1,6 +1,8 @@
 package com.github.bbugsco.substancecraft.recipe;
 
 import com.github.bbugsco.substancecraft.SubstanceCraft;
+import com.github.bbugsco.substancecraft.client.recipe.ClientRecipeInformation;
+import com.github.bbugsco.substancecraft.network.payloads.ModdedRecipesPayload;
 import com.github.bbugsco.substancecraft.recipe.recipes.ExtractorRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.CatalyticReformerRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.ElectrolysisRecipe;
@@ -11,10 +13,12 @@ import com.github.bbugsco.substancecraft.recipe.recipes.MixerRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.OxidizerRecipe;
 import com.github.bbugsco.substancecraft.recipe.recipes.RefineryRecipe;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeManager;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -26,7 +30,7 @@ import java.util.List;
 public class SubstanceCraftRecipes {
 
     private static final HashMap<RecipeType<?>, List<RecipeHolder<?>>> recipesByType = new HashMap<>();
-    private static final ArrayList<RecipeType<?>> types = new ArrayList<>();
+    public static final ArrayList<RecipeType<?>> types = new ArrayList<>();
 
     public static void registerRecipes() {
         types.add(Registry.register(BuiltInRegistries.RECIPE_TYPE, ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, HashPressRecipe.ID), HashPressRecipe.Type.INSTANCE));
@@ -71,10 +75,16 @@ public class SubstanceCraftRecipes {
                 recipesByType.get(type).add(recipeHolder);
             }
         }
+        //  Send recipe information to client
+        //   Since 1.21.2, recipes are server-side only
+        List<RecipeHolder<?>> recipes = new ArrayList<>(recipeManager.getRecipes());
+        for (ServerPlayer playerEntity : server.getPlayerList().getPlayers()) {
+            ServerPlayNetworking.send(playerEntity, new ModdedRecipesPayload(recipes));
+        }
     }
 
-    public static List<RecipeHolder<?>> getAllRecipesFor(RecipeType<?> type) {
-        return recipesByType.get(type);
+    public static List<RecipeHolder<?>> getAllRecipesFor(RecipeType<?> type, boolean client) {
+        return client ? ClientRecipeInformation.getAllRecipesFor(type) : recipesByType.get(type);
     }
 
 }
