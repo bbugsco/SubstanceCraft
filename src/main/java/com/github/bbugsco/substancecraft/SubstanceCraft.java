@@ -1,5 +1,7 @@
 package com.github.bbugsco.substancecraft;
 
+import com.github.bbugsco.substancecraft.block.SubstanceCraftBlocks;
+import com.github.bbugsco.substancecraft.block.entity.SubstanceCraftBlockEntities;
 import com.github.bbugsco.substancecraft.items.SubstanceCraftItems;
 import com.github.bbugsco.substancecraft.network.SubstanceCraftNetworking;
 import com.github.bbugsco.substancecraft.recipe.SubstanceCraftRecipes;
@@ -15,6 +17,8 @@ public class SubstanceCraft implements ModInitializer {
     @Override
     public void onInitialize() {
         SubstanceCraftItems.registerItems();
+        SubstanceCraftBlocks.registerBlocks();
+        SubstanceCraftBlockEntities.registerBlockEntities();
         SubstanceCraftRecipes.registerRecipes();
         SubstanceCraftNetworking.init();
     }
