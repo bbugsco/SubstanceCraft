@@ -1,5 +1,7 @@
 package com.github.bbugsco.substancecraft;
 
+import com.github.bbugsco.substancecraft.network.SubstanceCraftNetworking;
+import com.github.bbugsco.substancecraft.recipe.SubstanceCraftRecipes;
 import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +13,7 @@ public class SubstanceCraft implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        LOGGER.info("Initializing SubstanceCraft");
+        SubstanceCraftRecipes.registerRecipes();
+        SubstanceCraftNetworking.init();
     }
 }

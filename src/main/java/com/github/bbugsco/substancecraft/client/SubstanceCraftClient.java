@@ -1,6 +1,7 @@
 package com.github.bbugsco.substancecraft.client;
 
 import com.github.bbugsco.substancecraft.client.datagen.ModelGenerator;
+import com.github.bbugsco.substancecraft.client.network.SubstanceCraftClientNetworking;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -12,6 +13,7 @@ public class SubstanceCraftClient implements ClientModInitializer, DataGenerator
 
     @Override
     public void onInitializeClient() {
+        SubstanceCraftClientNetworking.init();
     }
 
     @Override
