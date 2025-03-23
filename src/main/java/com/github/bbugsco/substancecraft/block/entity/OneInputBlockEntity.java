@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends AbstractIoBlockEntity implements RecipeList<T> {
+public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends InputOutputBlockEntity implements RecipeList<T> {
 
     public static final int INPUT_SLOT = 0;
     public static final int OUTPUT_SLOT = 1;
@@ -41,6 +41,7 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Abst
         setupRecipeList();
     }
 
+    @Override
     public int getMaxByproducts() {
         int max = 0;
         for (RecipeHolder<T> holder : recipes) {
@@ -48,6 +49,11 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Abst
                 max = holder.value().getByproducts().size();
         }
         return max;
+    }
+
+    @Override
+    public int getNumRecipes() {
+        return recipes.size();
     }
 
     @Override
@@ -66,6 +72,7 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Abst
         }
     }
 
+    @Override
     public boolean hasRepeatInputRecipes() {
         return hasRepeatInputRecipes;
     }

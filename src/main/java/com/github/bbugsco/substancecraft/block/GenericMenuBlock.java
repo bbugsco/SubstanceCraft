@@ -1,6 +1,6 @@
 package com.github.bbugsco.substancecraft.block;
 
-import com.github.bbugsco.substancecraft.block.entity.AbstractIoBlockEntity;
+import com.github.bbugsco.substancecraft.block.entity.InputOutputBlockEntity;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -83,9 +83,9 @@ public class GenericMenuBlock<T extends MenuProvider> extends BaseEntityBlock im
     protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean moved) {
         if (!state.is(newState.getBlock())) {
             BlockEntity blockEntity = level.getBlockEntity(pos);
-            if (blockEntity instanceof AbstractIoBlockEntity) {
+            if (blockEntity instanceof InputOutputBlockEntity) {
                 if (level instanceof ServerLevel) {
-                    Containers.dropContents(level, pos, (AbstractIoBlockEntity) blockEntity);
+                    Containers.dropContents(level, pos, (InputOutputBlockEntity) blockEntity);
                 }
                 super.onRemove(state, level, pos, newState, moved);
                 level.updateNeighbourForOutputSignal(pos, this);

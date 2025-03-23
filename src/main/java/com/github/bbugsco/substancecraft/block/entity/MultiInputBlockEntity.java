@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> extends AbstractIoBlockEntity implements RecipeList<T> {
+public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> extends InputOutputBlockEntity implements RecipeList<T> {
 
     public static final int FIRST_INPUT_SLOT = 0;
     public static final int OUTPUT_SLOT = 4;
@@ -47,6 +47,7 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
         setupRecipeList();
     }
 
+    @Override
     public int getMaxByproducts() {
         int max = 0;
         for (RecipeHolder<T> holder : recipes) {
@@ -54,6 +55,11 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
                 max = holder.value().getByproducts().size();
         }
         return max;
+    }
+
+    @Override
+    public int getNumRecipes() {
+        return recipes.size();
     }
 
     @Override
@@ -72,6 +78,7 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
         }
     }
 
+    @Override
     public boolean hasRepeatInputRecipes() {
         return hasRepeatInputRecipes;
     }

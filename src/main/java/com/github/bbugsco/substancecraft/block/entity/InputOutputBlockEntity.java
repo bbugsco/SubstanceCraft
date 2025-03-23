@@ -22,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public abstract class AbstractIoBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
+public abstract class InputOutputBlockEntity extends BlockEntity implements ExtendedScreenHandlerFactory<BlockPos>, ImplementedInventory {
 
     protected final String displayName;
     protected final NonNullList<ItemStack> inventory;
@@ -35,9 +35,9 @@ public abstract class AbstractIoBlockEntity extends BlockEntity implements Exten
         @Override
         public int get(int index) {
             return switch (index) {
-                case 0 -> AbstractIoBlockEntity.this.progress;
-                case 1 -> AbstractIoBlockEntity.this.maxProgress;
-                case 2 -> AbstractIoBlockEntity.this.selectedRecipeIndex;
+                case 0 -> InputOutputBlockEntity.this.progress;
+                case 1 -> InputOutputBlockEntity.this.maxProgress;
+                case 2 -> InputOutputBlockEntity.this.selectedRecipeIndex;
                 default -> 0;
             };
         }
@@ -45,9 +45,9 @@ public abstract class AbstractIoBlockEntity extends BlockEntity implements Exten
         @Override
         public void set(int index, int value) {
             switch (index) {
-                case 0 -> AbstractIoBlockEntity.this.progress = value;
-                case 1 -> AbstractIoBlockEntity.this.maxProgress = value;
-                case 2 -> AbstractIoBlockEntity.this.selectedRecipeIndex = value;
+                case 0 -> InputOutputBlockEntity.this.progress = value;
+                case 1 -> InputOutputBlockEntity.this.maxProgress = value;
+                case 2 -> InputOutputBlockEntity.this.selectedRecipeIndex = value;
             }
         }
 
@@ -57,11 +57,18 @@ public abstract class AbstractIoBlockEntity extends BlockEntity implements Exten
         }
     };
 
-    public AbstractIoBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, String displayName, int inventorySize) {
+    public InputOutputBlockEntity(BlockEntityType<?> type, BlockPos pos, BlockState blockState, String displayName, int inventorySize) {
         super(type, pos, blockState);
         this.displayName = displayName;
         this.inventory = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
     }
+
+
+    public abstract int getMaxByproducts();
+
+    public abstract int getNumRecipes();
+
+    public abstract boolean hasRepeatInputRecipes();
 
     protected void updateState(BlockState state, Level level, BlockPos pos) {
         if (progress > 0) {
