@@ -1,5 +1,6 @@
 package com.github.bbugsco.substancecraft;
 
+import com.github.bbugsco.substancecraft.items.SubstanceCraftItems;
 import com.github.bbugsco.substancecraft.network.SubstanceCraftNetworking;
 import com.github.bbugsco.substancecraft.recipe.SubstanceCraftRecipes;
 import net.fabricmc.api.ModInitializer;
@@ -13,6 +14,7 @@ public class SubstanceCraft implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        SubstanceCraftItems.registerItems();
         SubstanceCraftRecipes.registerRecipes();
         SubstanceCraftNetworking.init();
     }
