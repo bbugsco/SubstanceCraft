@@ -7,25 +7,20 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import org.jetbrains.annotations.NotNull;
 
-public record RecipePayload(int totalRecipes, RecipeHolder<?> recipe) implements CustomPacketPayload {
+public record RecipePayload(RecipeHolder<?> recipe) implements CustomPacketPayload {
 
-    public static final Type<RecipePayload> TYPE = new Type<>(SubstanceCraftNetworking.RECIPE_PAYLOAD_TYPE);
+    public static final Type<RecipePayload> TYPE = new Type<>(SubstanceCraftNetworking.RECIPE_COUNT_PAYLOAD_TYPE);
     public static final StreamCodec<RegistryFriendlyByteBuf, RecipePayload> CODEC = CustomPacketPayload.codec(RecipePayload::write, RecipePayload::new);
 
     public RecipePayload(RegistryFriendlyByteBuf registryFriendlyByteBuf) {
-        this(readCount(registryFriendlyByteBuf), readRecipe(registryFriendlyByteBuf));
+        this(read(registryFriendlyByteBuf));
     }
 
-    private static RecipeHolder<?> readRecipe(RegistryFriendlyByteBuf registryFriendlyByteBuf) {
+    private static RecipeHolder<?> read(RegistryFriendlyByteBuf registryFriendlyByteBuf) {
         return RecipeHolder.STREAM_CODEC.decode(registryFriendlyByteBuf);
     }
 
-    private static int readCount(RegistryFriendlyByteBuf registryFriendlyByteBuf) {
-        return registryFriendlyByteBuf.readVarInt();
-    }
-
     private void write(RegistryFriendlyByteBuf registryFriendlyByteBuf) {
-        registryFriendlyByteBuf.writeVarInt(totalRecipes);
         RecipeHolder.STREAM_CODEC.encode(registryFriendlyByteBuf, recipe);
     }
 

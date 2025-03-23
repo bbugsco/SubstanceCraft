@@ -1,5 +1,6 @@
 package com.github.bbugsco.substancecraft.client.recipe;
 
+import com.github.bbugsco.substancecraft.network.payloads.RecipeCountPayload;
 import com.github.bbugsco.substancecraft.network.payloads.RecipePayload;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
@@ -18,12 +19,16 @@ public class ClientRecipeInformation {
     private static final HashMap<RecipeType<?>, List<RecipeHolder<?>>> recipesByType = new HashMap<>();
 
     public static void acceptRecipePacket(RecipePayload payload) {
-        if (expectedPackets == -1) {
-            expectedPackets = payload.totalRecipes();
-        }
         buffer.add(payload);
         receivedPackets++;
         if (expectedPackets != -1 && receivedPackets == expectedPackets) {
+            createList();
+        }
+    }
+
+    public static void acceptRecipeCountPacket(RecipeCountPayload payload) {
+        expectedPackets = payload.totalRecipes();
+        if (receivedPackets == expectedPackets) {
             createList();
         }
     }
@@ -38,7 +43,7 @@ public class ClientRecipeInformation {
     }
 
     public static List<RecipeHolder<?>> getAllRecipesFor(RecipeType<?> type) {
-        return recipesByType.get(type);
+        List<RecipeHolder<?>> ofType = recipesByType.get(type);
+        return ofType == null ? new ArrayList<>() : ofType;
     }
-
 }
