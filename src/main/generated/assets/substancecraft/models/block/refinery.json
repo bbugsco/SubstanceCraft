@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "substancecraft:block/refinery_bottom",
+    "front": "substancecraft:block/refinery_front",
+    "side": "substancecraft:block/refinery_side",
+    "top": "substancecraft:block/refinery_top"
+  }
+}

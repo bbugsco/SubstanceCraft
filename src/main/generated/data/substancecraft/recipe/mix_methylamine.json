@@ -1,0 +1,13 @@
+{
+  "type": "substancecraft:heated_mixer",
+  "byproducts": [],
+  "ingredients": [
+    "substancecraft:ammonia",
+    "substancecraft:methanol"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:methylamine"
+  },
+  "time": 800
+}

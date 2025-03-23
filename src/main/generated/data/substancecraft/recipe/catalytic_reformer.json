@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "1": "minecraft:cauldron",
+    "2": "minecraft:iron_ingot",
+    "3": "minecraft:copper_block",
+    "4": "minecraft:lava_bucket"
+  },
+  "pattern": [
+    "333",
+    "212",
+    "343"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:catalytic_reformer"
+  }
+}

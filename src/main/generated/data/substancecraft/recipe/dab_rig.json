@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "1": "minecraft:glass",
+    "2": "minecraft:glass_bottle"
+  },
+  "pattern": [
+    "1  ",
+    "121",
+    " 1 "
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:empty_dab_rig"
+  }
+}

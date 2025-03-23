@@ -1,0 +1,10 @@
+{
+  "type": "substancecraft:extractor",
+  "byproducts": [],
+  "ingredient": "minecraft:glass_bottle",
+  "result": {
+    "count": 1,
+    "id": "substancecraft:oxygen"
+  },
+  "time": 1200
+}

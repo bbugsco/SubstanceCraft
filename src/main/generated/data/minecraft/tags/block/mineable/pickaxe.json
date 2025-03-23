@@ -1,0 +1,14 @@
+{
+  "values": [
+    "substancecraft:hash_press",
+    "substancecraft:refinery",
+    "substancecraft:extractor",
+    "substancecraft:catalytic_reformer",
+    "substancecraft:oxidation_machine",
+    "substancecraft:electrolysis",
+    "substancecraft:mixer",
+    "substancecraft:heated_mixer",
+    "substancecraft:fermentation_tank",
+    "substancecraft:salt_block"
+  ]
+}

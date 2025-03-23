@@ -1,0 +1,13 @@
+{
+  "type": "substancecraft:fermentation_tank",
+  "byproducts": [],
+  "ingredients": [
+    "substancecraft:yeast",
+    "substancecraft:corn"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:ethanol"
+  },
+  "time": 2000
+}

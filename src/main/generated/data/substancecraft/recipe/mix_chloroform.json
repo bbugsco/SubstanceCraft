@@ -1,0 +1,13 @@
+{
+  "type": "substancecraft:heated_mixer",
+  "byproducts": [],
+  "ingredients": [
+    "substancecraft:chlorine",
+    "substancecraft:methane"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:chloroform"
+  },
+  "time": 800
+}

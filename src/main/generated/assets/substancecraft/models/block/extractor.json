@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "substancecraft:block/extractor_bottom",
+    "front": "substancecraft:block/extractor_front",
+    "side": "substancecraft:block/extractor_side",
+    "top": "substancecraft:block/extractor_top"
+  }
+}

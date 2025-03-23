@@ -1,0 +1,13 @@
+{
+  "type": "substancecraft:fermentation_tank",
+  "byproducts": [],
+  "ingredients": [
+    "substancecraft:yeast",
+    "minecraft:sugar"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:yeast"
+  },
+  "time": 2000
+}

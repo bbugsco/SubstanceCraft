@@ -1,0 +1,15 @@
+{
+  "type": "substancecraft:mixer",
+  "byproducts": [],
+  "ingredients": [
+    "substancecraft:2c_h",
+    "substancecraft:bromine",
+    "substancecraft:sodium_hydroxide",
+    "substancecraft:hydrochloric_acid"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:2c_b"
+  },
+  "time": 800
+}

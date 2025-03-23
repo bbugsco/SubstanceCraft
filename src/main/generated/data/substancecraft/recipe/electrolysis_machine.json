@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "1": "minecraft:copper_block",
+    "2": "minecraft:lever",
+    "3": "minecraft:redstone",
+    "4": "minecraft:cauldron",
+    "5": "minecraft:iron_ingot"
+  },
+  "pattern": [
+    "121",
+    "343",
+    "151"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:electrolysis"
+  }
+}

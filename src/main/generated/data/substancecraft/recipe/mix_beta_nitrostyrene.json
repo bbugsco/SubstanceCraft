@@ -1,0 +1,14 @@
+{
+  "type": "substancecraft:heated_mixer",
+  "byproducts": [],
+  "ingredients": [
+    "substancecraft:benzaldehyde",
+    "substancecraft:nitromethane",
+    "substancecraft:ammonium_acetate"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:beta_nitrostyrene"
+  },
+  "time": 800
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable_with_bottom",
+  "textures": {
+    "bottom": "substancecraft:block/oxidation_machine_bottom",
+    "front": "substancecraft:block/oxidation_machine_front_on",
+    "side": "substancecraft:block/oxidation_machine_side",
+    "top": "substancecraft:block/oxidation_machine_top"
+  }
+}

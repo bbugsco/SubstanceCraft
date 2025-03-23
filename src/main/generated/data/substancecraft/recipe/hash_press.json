@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "1": "minecraft:smooth_stone_slab",
+    "2": "minecraft:redstone_block",
+    "3": "minecraft:piston"
+  },
+  "pattern": [
+    "121",
+    " 3 ",
+    "111"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:hash_press"
+  }
+}

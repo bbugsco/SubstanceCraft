@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "1": "minecraft:cauldron",
+    "2": "minecraft:iron_ingot",
+    "3": "minecraft:copper_block",
+    "4": "minecraft:hopper"
+  },
+  "pattern": [
+    "343",
+    "212",
+    "323"
+  ],
+  "result": {
+    "count": 1,
+    "id": "substancecraft:extractor"
+  }
+}
