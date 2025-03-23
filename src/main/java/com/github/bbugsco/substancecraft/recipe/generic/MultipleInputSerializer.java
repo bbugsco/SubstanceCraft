@@ -3,7 +3,6 @@ package com.github.bbugsco.substancecraft.recipe.generic;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.core.HolderSet;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
@@ -11,6 +10,9 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MultipleInputSerializer<T extends MultipleInputRecipe> implements RecipeSerializer<T> {
 
@@ -41,8 +43,11 @@ public class MultipleInputSerializer<T extends MultipleInputRecipe> implements R
     }
 
     private T read(RegistryFriendlyByteBuf buf) {
-        NonNullList<Ingredient> input =  NonNullList.withSize(buf.readVarInt(), Ingredient.of(HolderSet.empty()));
-        input.replaceAll(ingredient -> Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
+        List<Ingredient> input = new ArrayList<>();
+        int size = buf.readVarInt();
+        for (int i = 0; i < size; i++) {
+            input.add(Ingredient.CONTENTS_STREAM_CODEC.decode(buf));
+        }
         ItemStack output = ItemStack.STREAM_CODEC.decode(buf);
         NonNullList<ItemStack> byproducts =  NonNullList.withSize(buf.readVarInt(), ItemStack.EMPTY);
         byproducts.replaceAll(ingredient -> ItemStack.STREAM_CODEC.decode(buf));

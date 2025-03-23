@@ -17,13 +17,14 @@ public class WorkstationStonecutterRecipeListMenu<T extends InputOutputBlockEnti
     protected static final int INPUT_SLOT_X = 98;
     protected static final int INPUT_SLOT_Y = 11;
 
-    protected static final int OUTPUT_SLOT_INDEX = 1;
     protected static final int OUTPUT_SLOT_X = 98;
     protected static final int OUTPUT_SLOT_Y = 59;
 
-    protected static final int BYPRODUCT_SLOT_INDEX = 2;
     protected static final int BYPRODUCT_SLOT_X = 116;
     protected static final int BYPRODUCT_SLOT_Y = 59;
+
+    protected final int BYPRODUCT_SLOT_INDEX;
+    protected final int OUTPUT_SLOT_INDEX;
 
     protected final T handle;
     protected final Container inventory;
@@ -40,7 +41,17 @@ public class WorkstationStonecutterRecipeListMenu<T extends InputOutputBlockEnti
         this.playerInventory = playerInventory;
         this.simpleContainerData = blockEntityData;
 
-        this.addSlot(inputSlot(handle));
+        boolean isMultiple = handle.multipleInput();
+        OUTPUT_SLOT_INDEX = isMultiple ? 4 : 1;
+        BYPRODUCT_SLOT_INDEX = OUTPUT_SLOT_INDEX + 1;
+
+        if (!isMultiple) {
+            this.addSlot(inputSlot(handle, 0));
+        } else {
+            for (int i = 0; i < 4; i++) {
+                this.addSlot(inputSlot(handle, i));
+            }
+        }
         this.addSlot(outputSlot(handle));
         for (int i = 0; i < Math.min(3, handle.getMaxByproducts()); i++) {
             this.addSlot(byproductSlot(handle, i));
@@ -112,15 +123,15 @@ public class WorkstationStonecutterRecipeListMenu<T extends InputOutputBlockEnti
         return this.inventory.stillValid(player);
     }
 
-    public static Slot inputSlot(Container container) {
-        return new Slot(container, INPUT_SLOT_INDEX, INPUT_SLOT_X, INPUT_SLOT_Y);
+    public static Slot inputSlot(Container container, int index) {
+        return new Slot(container, INPUT_SLOT_INDEX + index, INPUT_SLOT_X + (18 * index), INPUT_SLOT_Y);
     }
 
-    public static Slot outputSlot(Container container) {
+    public Slot outputSlot(Container container) {
         return new Slot(container, OUTPUT_SLOT_INDEX, OUTPUT_SLOT_X, OUTPUT_SLOT_Y);
     }
 
-    public static Slot byproductSlot(Container container, int index) {
+    public Slot byproductSlot(Container container, int index) {
         return new Slot(container, BYPRODUCT_SLOT_INDEX + index, BYPRODUCT_SLOT_X + (18 * index), BYPRODUCT_SLOT_Y);
     }
 

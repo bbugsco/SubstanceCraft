@@ -1,6 +1,5 @@
 package com.github.bbugsco.substancecraft.block.entity;
 
-import com.github.bbugsco.substancecraft.recipe.SubstanceCraftRecipes;
 import com.github.bbugsco.substancecraft.recipe.generic.OneInputRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.item.ItemStack;
@@ -38,7 +37,7 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Inpu
     @Override
     public void setLevel(Level level) {
         super.setLevel(level);
-        setupRecipeList();
+        setupRecipeList(level);
     }
 
     @Override
@@ -57,18 +56,21 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Inpu
     }
 
     @Override
+    public boolean multipleInput() {
+        return false;
+    }
+
+    @Override
     public List<RecipeHolder<T>> getRecipes() {
         return this.recipes;
     }
 
     @SuppressWarnings("unchecked")
-    public void setupRecipeList() {
-        if (this.level != null) {
-            this.recipes.clear();
-            List<RecipeHolder<?>> allRecipes = SubstanceCraftRecipes.getAllRecipesFor(type, level.isClientSide);
-            for (RecipeHolder<?> recipeHolder : allRecipes) {
-                recipes.add((RecipeHolder<T>) recipeHolder);
-            }
+    public void setupRecipeList(Level level) {
+        this.recipes.clear();
+        List<RecipeHolder<?>> allRecipes = getRecipeList(type, level);
+        for (RecipeHolder<?> recipeHolder : allRecipes) {
+            recipes.add((RecipeHolder<T>) recipeHolder);
         }
     }
 

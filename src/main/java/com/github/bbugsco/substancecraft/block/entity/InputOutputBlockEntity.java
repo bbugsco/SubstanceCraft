@@ -1,6 +1,8 @@
 package com.github.bbugsco.substancecraft.block.entity;
 
 import com.github.bbugsco.substancecraft.block.GenericMenuBlock;
+import com.github.bbugsco.substancecraft.client.recipe.ClientRecipeInformation;
+import com.github.bbugsco.substancecraft.recipe.SubstanceCraftRecipes;
 import com.github.bbugsco.substancecraft.recipe.generic.ByproductRecipe;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerFactory;
 import net.minecraft.core.BlockPos;
@@ -13,6 +15,8 @@ import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -63,12 +67,24 @@ public abstract class InputOutputBlockEntity extends BlockEntity implements Exte
         this.inventory = NonNullList.withSize(inventorySize, ItemStack.EMPTY);
     }
 
-
     public abstract int getMaxByproducts();
 
     public abstract int getNumRecipes();
 
     public abstract boolean hasRepeatInputRecipes();
+
+    public abstract boolean multipleInput();
+
+    @NotNull
+    protected List<RecipeHolder<?>> getRecipeList(RecipeType<?> type, Level level) {
+        List<RecipeHolder<?>> allRecipes;
+        if (level.isClientSide) {
+            allRecipes = ClientRecipeInformation.getAllRecipesFor(type);
+        } else {
+            allRecipes = SubstanceCraftRecipes.getAllRecipesFor(type);
+        }
+        return allRecipes;
+    }
 
     protected void updateState(BlockState state, Level level, BlockPos pos) {
         if (progress > 0) {

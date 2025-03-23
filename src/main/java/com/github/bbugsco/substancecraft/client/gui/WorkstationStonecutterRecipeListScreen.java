@@ -66,7 +66,7 @@ public abstract class WorkstationStonecutterRecipeListScreen<T extends Workstati
 
     @Override
     protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
-        setBackgroundTexture(menu.getHandle().getMaxByproducts());
+        setBackgroundTexture(menu.getHandle().getMaxByproducts(), menu.getHandle().multipleInput());
         RenderSystem.setShaderColor(1f, 1f, 1f, 1f);
         RenderSystem.setShaderTexture(0, TEXTURE);
         guiGraphics.blit(RenderType::guiTextured, TEXTURE, leftPos, topPos, 0, 0, imageWidth, imageHeight, 256, 256);
@@ -200,14 +200,24 @@ public abstract class WorkstationStonecutterRecipeListScreen<T extends Workstati
         else return Component.literal(itemStack.getDisplayName().getString().replace("[", "").replace("]", "") + " " + chance + "%");
     }
 
-    private void setBackgroundTexture(int numberOfByproductSlots) {
-        if (numberOfByproductSlots == 1)
-            TEXTURE = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/gui/one_input_output_1_byproduct.png");
-        else if (numberOfByproductSlots == 2)
-            TEXTURE = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/gui/one_input_output_2_byproduct.png");
-        else if (numberOfByproductSlots == 3)
-            TEXTURE = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/gui/one_input_output_3_byproduct.png");
-        else TEXTURE = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/gui/one_input_output.png");
+    private void setBackgroundTexture(int numberOfByproductSlots, boolean multipleInput) {
+        if (!multipleInput) {
+            if (numberOfByproductSlots == 1)
+                TEXTURE = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/gui/one_input_output_1_byproduct.png");
+            else if (numberOfByproductSlots == 2)
+                TEXTURE = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/gui/one_input_output_2_byproduct.png");
+            else if (numberOfByproductSlots == 3)
+                TEXTURE = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/gui/one_input_output_3_byproduct.png");
+            else TEXTURE = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/gui/one_input_output.png");
+        } else {
+            if (numberOfByproductSlots == 1)
+                TEXTURE = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/gui/multiple_input_output_1_byproduct.png");
+            else if (numberOfByproductSlots == 2)
+                TEXTURE = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/gui/multiple_input_output_2_byproduct.png");
+            else if (numberOfByproductSlots == 3)
+                TEXTURE = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/gui/multiple_input_output_3_byproduct.png");
+            else TEXTURE = ResourceLocation.fromNamespaceAndPath(SubstanceCraft.MOD_ID, "textures/gui/multiple_input_output.png");
+        }
     }
 
 

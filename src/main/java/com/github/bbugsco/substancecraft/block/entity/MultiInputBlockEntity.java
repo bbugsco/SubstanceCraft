@@ -1,6 +1,5 @@
 package com.github.bbugsco.substancecraft.block.entity;
 
-import com.github.bbugsco.substancecraft.recipe.SubstanceCraftRecipes;
 import com.github.bbugsco.substancecraft.recipe.generic.MultipleInputRecipe;
 import com.github.bbugsco.substancecraft.recipe.generic.MultipleItemInput;
 import net.minecraft.core.BlockPos;
@@ -44,7 +43,7 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
     @Override
     public void setLevel(Level level) {
         super.setLevel(level);
-        setupRecipeList();
+        setupRecipeList(level);
     }
 
     @Override
@@ -58,6 +57,11 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
     }
 
     @Override
+    public boolean multipleInput() {
+        return true;
+    }
+
+    @Override
     public int getNumRecipes() {
         return recipes.size();
     }
@@ -68,13 +72,11 @@ public abstract class MultiInputBlockEntity<T extends MultipleInputRecipe> exten
     }
 
     @SuppressWarnings("unchecked")
-    public void setupRecipeList() {
-        if (this.level != null) {
-            this.recipes.clear();
-            List<RecipeHolder<?>> allRecipes = SubstanceCraftRecipes.getAllRecipesFor(type, level.isClientSide);
-            for (RecipeHolder<?> recipeHolder : allRecipes) {
-                recipes.add((RecipeHolder<T>) recipeHolder);
-            }
+    public void setupRecipeList(Level level) {
+        this.recipes.clear();
+        List<RecipeHolder<?>> allRecipes = getRecipeList(type, level);
+        for (RecipeHolder<?> recipeHolder : allRecipes) {
+            recipes.add((RecipeHolder<T>) recipeHolder);
         }
     }
 

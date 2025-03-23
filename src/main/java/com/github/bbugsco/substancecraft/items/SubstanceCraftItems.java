@@ -1,6 +1,7 @@
 package com.github.bbugsco.substancecraft.items;
 
 import com.github.bbugsco.substancecraft.SubstanceCraft;
+import com.github.bbugsco.substancecraft.block.SubstanceCraftBlocks;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -89,26 +90,26 @@ public class SubstanceCraftItems {
                 FabricItemGroup.builder().title(Component.translatable("itemgroup.substancecraft.substances"))
                         .icon(() -> new ItemStack(Items.OMINOUS_BOTTLE)).displayItems((displayContext, entries) -> {
                             entries.accept(SubstanceCraftItems.MARIJUANA);
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MARIJUANA_PLANT));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MARIJUANA_PLANT));
                             entries.accept(SubstanceCraftItems.MARIJUANA_TRIM);
                             entries.accept(SubstanceCraftItems.HASH);
                             entries.accept(SubstanceCraftItems.EMPTY_DAB_RIG);
                             entries.accept(SubstanceCraftItems.DAB_RIG);
                             entries.accept(SubstanceCraftItems.CORN);
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CORN_CROP));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CORN_CROP));
                             entries.accept(SubstanceCraftItems.YEAST);
                             entries.accept(SubstanceCraftItems.ERGOT);
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HASH_PRESS));
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.REFINERY));
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CATALYTIC_REFORMER));
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE));
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OXIDATION_MACHINE));
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.EXTRACTOR));
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MIXER));
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HEATED_MIXER));
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.FERMENTATION_TANK));
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OIL_SHALE));
-                            //entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.SALT));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HASH_PRESS));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.REFINERY));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.CATALYTIC_REFORMER));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.ELECTROLYSIS_MACHINE));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OXIDATION_MACHINE));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.EXTRACTOR));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.MIXER));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.HEATED_MIXER));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.FERMENTATION_TANK));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.OIL_SHALE));
+                            entries.accept(SubstanceCraftBlocks.getBlockItem(SubstanceCraftBlocks.SALT));
                             entries.accept(SubstanceCraftItems.DIPHENHYDRAMINE);
                             entries.accept(SubstanceCraftItems.KETAMINE);
                             entries.accept(SubstanceCraftItems.TWO_C_H);

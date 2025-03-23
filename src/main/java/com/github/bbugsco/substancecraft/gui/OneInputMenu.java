@@ -8,12 +8,14 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.SimpleContainerData;
 import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.level.block.entity.BlockEntity;
+
 import java.util.List;
 
 public class OneInputMenu<R extends OneInputRecipe, T extends OneInputBlockEntity<R>> extends WorkstationStonecutterRecipeListMenu<T> {
 
-    protected OneInputMenu(MenuType<? extends OneInputMenu> menu, int syncId, Inventory playerInventory, InputOutputBlockEntity entity, SimpleContainerData blockEntityData) {
-        super(menu, syncId, playerInventory, entity, blockEntityData);
+    protected OneInputMenu(MenuType<? extends OneInputMenu> menu, int syncId, Inventory playerInventory, BlockEntity entity, SimpleContainerData blockEntityData) {
+        super(menu, syncId, playerInventory, (InputOutputBlockEntity) entity, blockEntityData);
     }
 
     @Override
