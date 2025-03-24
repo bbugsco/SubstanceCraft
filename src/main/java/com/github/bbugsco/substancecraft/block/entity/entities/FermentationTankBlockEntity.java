@@ -19,7 +19,7 @@ public class FermentationTankBlockEntity extends MultiInputBlockEntity<Fermentat
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new FermentationTankMenu(i, inventory, this, dataAccess);
+        return new FermentationTankMenu(i, inventory, this, data);
     }
 
 }

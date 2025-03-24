@@ -19,6 +19,6 @@ public class HashPressBlockEntity extends OneInputBlockEntity<HashPressRecipe> {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new HashPressMenu(i, inventory, this, dataAccess);
+        return new HashPressMenu(i, inventory, this, data);
     }
 }

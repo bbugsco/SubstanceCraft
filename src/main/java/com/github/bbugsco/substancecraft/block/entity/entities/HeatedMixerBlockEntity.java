@@ -19,7 +19,7 @@ public class HeatedMixerBlockEntity extends MultiInputBlockEntity<HeatedMixerRec
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new HeatedMixerMenu(i, inventory, this, dataAccess);
+        return new HeatedMixerMenu(i, inventory, this, data);
     }
 
 

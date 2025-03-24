@@ -19,7 +19,7 @@ public class RefineryBlockEntity extends OneInputBlockEntity<RefineryRecipe> {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int syncId, Inventory inventory, Player player) {
-        return new RefineryMenu(syncId, inventory, this, dataAccess);
+        return new RefineryMenu(syncId, inventory, this, data);
     }
 
 }

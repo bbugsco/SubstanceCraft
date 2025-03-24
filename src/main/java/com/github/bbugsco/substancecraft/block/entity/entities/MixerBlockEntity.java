@@ -19,7 +19,7 @@ public class MixerBlockEntity extends MultiInputBlockEntity<MixerRecipe> {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new MixerMenu(i, inventory, this, dataAccess);
+        return new MixerMenu(i, inventory, this, data);
     }
 
 

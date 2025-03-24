@@ -19,7 +19,7 @@ public class CatalyticReformerBlockEntity extends OneInputBlockEntity<CatalyticR
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new CatalyticReformerMenu(i, inventory, this, dataAccess);
+        return new CatalyticReformerMenu(i, inventory, this, data);
     }
 
 }

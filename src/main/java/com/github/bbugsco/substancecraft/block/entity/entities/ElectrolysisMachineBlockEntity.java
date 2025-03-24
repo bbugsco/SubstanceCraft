@@ -19,7 +19,7 @@ public class ElectrolysisMachineBlockEntity extends OneInputBlockEntity<Electrol
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new ElectrolysisMachineMenu(i, inventory, this, dataAccess);
+        return new ElectrolysisMachineMenu(i, inventory, this, data);
     }
 
 }

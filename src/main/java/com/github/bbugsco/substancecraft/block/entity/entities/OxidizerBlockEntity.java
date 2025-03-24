@@ -19,7 +19,7 @@ public class OxidizerBlockEntity extends OneInputBlockEntity<OxidizerRecipe> {
 
     @Override
     public @Nullable AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new OxidizerMenu(i, inventory, this, dataAccess);
+        return new OxidizerMenu(i, inventory, this, data);
     }
 
 }

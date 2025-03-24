@@ -35,7 +35,7 @@ public abstract class InputOutputBlockEntity extends BlockEntity implements Exte
     protected int maxProgress;
     protected int selectedRecipeIndex;
 
-    protected final SimpleContainerData dataAccess = new SimpleContainerData(3) {
+    protected final SimpleContainerData data = new SimpleContainerData(3) {
         @Override
         public int get(int index) {
             return switch (index) {
