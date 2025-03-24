@@ -1,6 +1,5 @@
 package com.github.bbugsco.substancecraft.world;
 
-import com.github.bbugsco.substancecraft.SubstanceCraft;
 import com.github.bbugsco.substancecraft.block.SubstanceCraftBlocks;
 import com.github.bbugsco.substancecraft.items.SubstanceCraftItems;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
@@ -26,7 +25,6 @@ public class SubstanceCraftLootTables {
 
 
     public static void registerLootTables() {
-        SubstanceCraft.LOGGER.info("Registering Mod Loot Tables for "  + SubstanceCraft.MOD_ID);
         addMarijuanaPlantSeedsToJungleTempleChestLoot();
         addFungiToCrops();
         addCornSeedsToVillagerHouseChestLoot();

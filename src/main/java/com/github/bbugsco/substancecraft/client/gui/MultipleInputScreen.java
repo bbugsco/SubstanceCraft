@@ -20,7 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Environment(EnvType.CLIENT)
-public class MultipleInputScreen<R extends MultipleInputRecipe, E extends MultiInputBlockEntity<R>, T extends MultipleInputMenu<R, E>> extends WorkstationStonecutterRecipeListScreen<T> {
+public class MultipleInputScreen<R extends MultipleInputRecipe, E extends MultiInputBlockEntity<R>, T extends MultipleInputMenu<R, E>> extends InputOutputScreen<T> {
 
     public MultipleInputScreen(T menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -52,10 +52,10 @@ public class MultipleInputScreen<R extends MultipleInputRecipe, E extends MultiI
     @Override
     protected void renderRecipes(GuiGraphics guiGraphics, int x, int y, int startIndex) {
         List<RecipeHolder<R>> list = this.menu.getRecipes();
-        for (int index = this.startIndex; index < startIndex && index < this.menu.getNumRecipes(); index++) {
-            int indexShift = index - this.startIndex;
-            int renderX = x + indexShift % RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_WIDTH;
-            int row = indexShift / RECIPES_COLUMNS;
+        for (int index = this.firstVisibleIndex; index < startIndex && index < this.menu.getNumRecipes(); index++) {
+            int relativeIndex = index - this.firstVisibleIndex;
+            int renderX = x + relativeIndex % RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_WIDTH;
+            int row = relativeIndex / RECIPES_COLUMNS;
             int renderY = y + row * RECIPES_IMAGE_SIZE_HEIGHT + 2;
             guiGraphics.renderItem(list.get(index).value().getResult(), renderX, renderY);
         }

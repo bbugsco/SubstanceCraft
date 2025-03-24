@@ -13,7 +13,6 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 public class SubstanceCraftFeatures {
 
     public static void registerFeatures() {
-        SubstanceCraft.LOGGER.info("Registering Features for " + SubstanceCraft.MOD_ID);
         BiomeModifications.addFeature(
                 BiomeSelectors.includeByKey(Biomes.JUNGLE, Biomes.BAMBOO_JUNGLE, Biomes.SPARSE_JUNGLE),
                 GenerationStep.Decoration.VEGETAL_DECORATION,

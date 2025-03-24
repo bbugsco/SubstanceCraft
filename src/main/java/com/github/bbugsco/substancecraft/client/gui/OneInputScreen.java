@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Environment(EnvType.CLIENT)
-public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEntity<R>, T extends OneInputMenu<R, E>> extends WorkstationStonecutterRecipeListScreen<T> {
+public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEntity<R>, T extends OneInputMenu<R, E>> extends InputOutputScreen<T> {
 
     public OneInputScreen(T menu, Inventory playerInventory, Component title) {
         super(menu, playerInventory, title);
@@ -32,6 +32,7 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
         ItemStack resultItem = recipe.getResult();
         List<Component> tooltip = new ArrayList<>();
         tooltip.add(getItemNameString(resultItem));
+        tooltip.add(Component.literal("Requires: "));
         tooltip.add(getItemNameString(inputItem));
         if (!recipe.getByproducts().isEmpty()) {
             tooltip.add(Component.literal("Byproducts: "));
@@ -46,10 +47,10 @@ public class OneInputScreen<R extends OneInputRecipe, E extends OneInputBlockEnt
     @Override
     protected void renderRecipes(GuiGraphics guiGraphics, int x, int y, int startIndex) {
         List<RecipeHolder<R>> list = this.menu.getRecipes();
-        for (int index = this.startIndex; index < startIndex && index < this.menu.getNumRecipes(); index++) {
-            int indexShift = index - this.startIndex;
-            int renderX = x + indexShift % RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_WIDTH;
-            int row = indexShift / RECIPES_COLUMNS;
+        for (int index = this.firstVisibleIndex; index < startIndex && index < this.menu.getNumRecipes(); index++) {
+            int relativeIndex = index - this.firstVisibleIndex;
+            int renderX = x + relativeIndex % RECIPES_COLUMNS * RECIPES_IMAGE_SIZE_WIDTH;
+            int row = relativeIndex / RECIPES_COLUMNS;
             int renderY = y + row * RECIPES_IMAGE_SIZE_HEIGHT + 2;
             guiGraphics.renderItem(list.get(index).value().getResult(), renderX, renderY);
         }

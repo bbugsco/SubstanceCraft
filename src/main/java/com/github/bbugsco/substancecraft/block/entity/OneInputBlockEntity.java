@@ -117,6 +117,12 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Inpu
             if (hasRecipe()) {
                 T recipe = getRecipes().get(getSelectedRecipeIndex()).value();
                 if (recipe.matches(new SingleRecipeInput(inventory.getFirst()), level)) {
+                    for (int i = 0; i < recipes.size(); i++) {
+                        if (recipes.get(i).value() == recipe) {
+                            selectedRecipeIndex = i;
+                            break;
+                        }
+                    }
                     if ((inventory.get(OUTPUT_SLOT).getCount() == 0) || inventory.get(OUTPUT_SLOT).getItem() == recipe.getResult().getItem()) {
                         progress++;
                         setChanged(level, pos, state);
@@ -127,6 +133,8 @@ public abstract class OneInputBlockEntity<T extends OneInputRecipe> extends Inpu
                     } else {
                         progress = 0;
                     }
+                } else {
+                    progress = 0;
                 }
             } else {
                 progress = 0;

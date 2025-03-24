@@ -12,7 +12,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 
 import java.util.List;
 
-public class OneInputMenu<R extends OneInputRecipe, T extends OneInputBlockEntity<R>> extends WorkstationStonecutterRecipeListMenu<T> {
+public class OneInputMenu<R extends OneInputRecipe, T extends OneInputBlockEntity<R>> extends InputOutputMenu<T> {
 
     protected OneInputMenu(MenuType<? extends OneInputMenu> menu, int syncId, Inventory playerInventory, BlockEntity entity, SimpleContainerData blockEntityData) {
         super(menu, syncId, playerInventory, (InputOutputBlockEntity) entity, blockEntityData);
@@ -21,34 +21,18 @@ public class OneInputMenu<R extends OneInputRecipe, T extends OneInputBlockEntit
     @Override
     public boolean clickMenuButton(Player player, int id) {
         if (this.isValidRecipeIndex(id)) {
-            handle.setSelectedRecipeIndex(id);
-            handle.setChanged();
+            blockEntity.setSelectedRecipeIndex(id);
+            blockEntity.setChanged();
         }
         return true;
     }
 
     private boolean isValidRecipeIndex(int recipeIndex) {
-        return recipeIndex >= 0 && recipeIndex < handle.getRecipes().size();
-    }
-
-    public int getSelectedRecipeIndex() {
-        try {
-            return simpleContainerData.get(2);
-        } catch (IndexOutOfBoundsException e) {
-            return 0;
-        }
+        return recipeIndex >= 0 && recipeIndex < blockEntity.getRecipes().size();
     }
 
     public List<RecipeHolder<R>> getRecipes() {
-        return handle.getRecipes();
+        return blockEntity.getRecipes();
     }
-
-    public boolean hasRepeatInputRecipes() {
-        return handle.hasRepeatInputRecipes();
-    }
-
-
-
-
 
 }

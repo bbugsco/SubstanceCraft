@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
 public class CatalyticReformerBlockEntity extends OneInputBlockEntity<CatalyticReformerRecipe> {
 
     public CatalyticReformerBlockEntity(BlockPos pos, BlockState state) {
-        super(pos, state, "Catalytic Reform", CatalyticReformerRecipe.Type.INSTANCE, SubstanceCraftBlockEntities.CATALYTIC_REFORMER, false);
+        super(pos, state, "Catalytic Reform", CatalyticReformerRecipe.Type.INSTANCE, SubstanceCraftBlockEntities.CATALYTIC_REFORMER, true);
     }
 
     @Override
